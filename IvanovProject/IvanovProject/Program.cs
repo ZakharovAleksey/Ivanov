@@ -124,11 +124,38 @@ namespace IvanovProject
             initialString += additionString;
         }
 
-        // TODO: Export in XML
         static void Main(string[] args)
         {
-            int initialLength = 300;
-            int additionalLength = 100;
+            // Length of inital string
+            int initialLength = 500;
+            // Length of additionally generated strings
+            int additionalLength = 300;
+
+            // Weight of isert, remove, substitute operation respectively
+            int insertCost = 1;
+            int removeCost = 1;
+            int substituteCost = 2;
+
+            string fileNameLength = @"C:\Users\Alexey\Dropbox\Programming\C#\Ivanov\IvanovProject\ResultData\LevinstainDistance\distanceIns" + 
+                insertCost.ToString() + "Rem" + 
+                removeCost.ToString() + "Sub" + 
+                substituteCost.ToString()+ ".txt";
+
+            if (!File.Exists(fileNameLength))
+                File.Create(fileNameLength);
+            else
+                File.Delete(fileNameLength);
+
+            string fileNameTime = @"C:\Users\Alexey\Dropbox\Programming\C#\Ivanov\IvanovProject\ResultData\LevinstainDistance\timeIns" +
+                insertCost.ToString() + "Rem" +
+                removeCost.ToString() + "Sub" +
+                substituteCost.ToString() + ".txt";
+
+            if (!File.Exists(fileNameTime))
+                File.Create(fileNameTime);
+            else
+                File.Delete(fileNameTime);
+
 
             try
             {
@@ -138,13 +165,20 @@ namespace IvanovProject
 
                 long executionTime = 0;
 
-                for (int i = 0; i < 10; ++i)
+                for (int i = 0; i < 50; ++i)
                 {
                     addRandomString(ref first, rand.Next(1, additionalLength));
                     addRandomString(ref second, rand.Next(1, additionalLength));
 
-                    resultDistance = LevenshteinDistanceSolver(first, second, ref executionTime);
+                    resultDistance = LevenshteinDistanceSolver(first, second, ref executionTime, insertCost, substituteCost, removeCost);
                     Console.WriteLine("Distance: {0}, string sum len: {1}, Time {2}", resultDistance, first.Length + second.Length, executionTime);
+
+                    using (StreamWriter sw = new StreamWriter(fileNameLength, true, System.Text.Encoding.Default))
+                        sw.WriteLine("{0} {1}", first.Length + second.Length, resultDistance);
+
+                    using (StreamWriter sw = new StreamWriter(fileNameTime, true, System.Text.Encoding.Default))
+                        sw.WriteLine("{0} {1}", first.Length + second.Length, executionTime);
+
                 }
             }
             catch (ArgumentException exception)
@@ -154,6 +188,10 @@ namespace IvanovProject
             catch (InvalidDataException exception)
             {
                 Console.WriteLine(exception.Message);
+            }
+            finally
+            {
+                
             }
 
 
