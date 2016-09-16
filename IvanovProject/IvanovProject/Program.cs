@@ -127,34 +127,28 @@ namespace IvanovProject
         static void Main(string[] args)
         {
             // Length of inital string
-            int initialLength = 500;
+            int initialLength = 100;    //500
             // Length of additionally generated strings
-            int additionalLength = 300;
+            int additionalLength = 10;  // 300
 
             // Weight of isert, remove, substitute operation respectively
             int insertCost = 1;
             int removeCost = 1;
             int substituteCost = 2;
 
-            string fileNameLength = @"C:\Users\Alexey\Dropbox\Programming\C#\Ivanov\IvanovProject\ResultData\LevinstainDistance\distanceIns" + 
+            string fileNameLength =  @"Data\distanceIns" + 
                 insertCost.ToString() + "Rem" + 
                 removeCost.ToString() + "Sub" + 
                 substituteCost.ToString()+ ".txt";
 
-            if (!File.Exists(fileNameLength))
-                File.Create(fileNameLength);
-            else
-                File.Delete(fileNameLength);
+            StreamWriter distanceStreamWriter = new StreamWriter(fileNameLength);
 
-            string fileNameTime = @"C:\Users\Alexey\Dropbox\Programming\C#\Ivanov\IvanovProject\ResultData\LevinstainDistance\timeIns" +
+            string fileNameTime = @"Data\timeIns" +
                 insertCost.ToString() + "Rem" +
                 removeCost.ToString() + "Sub" +
                 substituteCost.ToString() + ".txt";
 
-            if (!File.Exists(fileNameTime))
-                File.Create(fileNameTime);
-            else
-                File.Delete(fileNameTime);
+            StreamWriter timeStreamWriter = new StreamWriter(fileNameTime);
 
 
             try
@@ -173,12 +167,8 @@ namespace IvanovProject
                     resultDistance = LevenshteinDistanceSolver(first, second, ref executionTime, insertCost, substituteCost, removeCost);
                     Console.WriteLine("Distance: {0}, string sum len: {1}, Time {2}", resultDistance, first.Length + second.Length, executionTime);
 
-                    using (StreamWriter sw = new StreamWriter(fileNameLength, true, System.Text.Encoding.Default))
-                        sw.WriteLine("{0} {1}", first.Length + second.Length, resultDistance);
-
-                    using (StreamWriter sw = new StreamWriter(fileNameTime, true, System.Text.Encoding.Default))
-                        sw.WriteLine("{0} {1}", first.Length + second.Length, executionTime);
-
+                    distanceStreamWriter.WriteLine("{0} {1}", first.Length + second.Length, resultDistance);
+                    timeStreamWriter.WriteLine("{0} {1}", first.Length + second.Length, executionTime);
                 }
             }
             catch (ArgumentException exception)
@@ -191,10 +181,9 @@ namespace IvanovProject
             }
             finally
             {
-                
+                distanceStreamWriter.Close();
+                timeStreamWriter.Close();
             }
-
-
         }
     }
 }
