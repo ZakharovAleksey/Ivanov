@@ -60,22 +60,24 @@ namespace SelectVSBubbleSort
 
 
             MyArray array = new MyArray(10);
-            array.fillArrayWithRandomValues(ref rand , 0, 100);
-            Console.WriteLine(array);
-            array.BubbleSort();
-            Console.WriteLine(array);
+            array.fillArrayWithRandomValues(ref rand, 0, 100);
+            //Console.WriteLine(array);
+            //array.BubbleSort();
+            //Console.WriteLine(array);
 
-            Console.WriteLine("Assigment: {0}", MyInt.AssigmentCount);
-            Console.WriteLine("Compare: {0}", MyInt.CompareCount);
-            Console.WriteLine("-------------------------");
-            MyArray array1 = new MyArray(10);
-            array1.fillArrayWithRandomValues(ref rand, 0, 100);
-            Console.WriteLine(array1);
-            array1.SelectSort();
-            Console.WriteLine(array1);
+            //Console.WriteLine("Assigment: {0}", MyInt.AssigmentCount);
+            //Console.WriteLine("Compare: {0}", MyInt.CompareCount);
+            //Console.WriteLine("-------------------------");
+            //MyArray array1 = new MyArray(10);
+            //array1.fillArrayWithRandomValues(ref rand, 0, 100);
+            //Console.WriteLine(array1);
+            //array1.SelectSort();
+            //Console.WriteLine(array1);
 
-            Console.WriteLine("Assigment: {0}", MyInt.AssigmentCount);
-            Console.WriteLine("Compare: {0}", MyInt.CompareCount);
+            //Console.WriteLine("Assigment: {0}", MyInt.AssigmentCount);
+            //Console.WriteLine("Compare: {0}", MyInt.CompareCount);
+
+            array.Solver();
 
 
         }

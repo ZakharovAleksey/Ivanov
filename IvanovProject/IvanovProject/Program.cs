@@ -136,7 +136,7 @@ namespace IvanovProject
             int removeCost = 1;
             int substituteCost = 2;
 
-            string fileNameLength =  @"Data\distanceIns" + 
+            string fileNameLength = @"Data\distanceIns" + 
                 insertCost.ToString() + "Rem" + 
                 removeCost.ToString() + "Sub" + 
                 substituteCost.ToString()+ ".txt";
@@ -149,7 +149,6 @@ namespace IvanovProject
                 substituteCost.ToString() + ".txt";
 
             StreamWriter timeStreamWriter = new StreamWriter(fileNameTime);
-
 
             try
             {

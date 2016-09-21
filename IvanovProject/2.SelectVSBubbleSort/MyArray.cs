@@ -73,12 +73,23 @@ namespace SelectVSBubbleSort
         /// <summary>
         /// Execute bubble sort
         /// </summary>
-        public void BubbleSort()
+        public void BubbleSort(bool fromLittleToBig)
         {
             for (int i = 0; i < count; ++i)
                 for (int j = i; j < count; ++j)
-                    if (body[i] < body[j])
-                        body[i].Swap(ref body[j]);
+                {
+                    if (fromLittleToBig)
+                    {
+                        if (body[i] > body[j])
+                            body[i].Swap(ref body[j]);
+                    }
+                    else
+                    {
+                        if (body[i] < body[j])
+                            body[i].Swap(ref body[j]);
+                    }
+
+                }
 
             // Store total number of assigment and compare operations
             compareCount = MyInt.CompareCount;
@@ -109,7 +120,8 @@ namespace SelectVSBubbleSort
 
                 // Search minimum element in array
                 for (int j = i; j < count; ++j)
-                    if (body[j] < min)
+                    // Change here for determ sequense order
+                    if (body[j] > min)
                     {
                         min.Assigment(ref body[j]);
                         minID = j;
@@ -127,6 +139,57 @@ namespace SelectVSBubbleSort
             // Set total number of assigment and compare operations equal to zero
             MyInt.CompareCount = 0;
             MyInt.AssigmentCount = 0;
+        }
+
+        object Clone()
+        {
+            return this.MemberwiseClone();
+        }
+
+        public void Solver()
+        {
+            Console.WriteLine(this);
+            BubbleSort(true);
+            Console.WriteLine(this);
+            Console.WriteLine("////");
+
+            MyArray result = new MyArray(this.count);
+            result.body = this.body;
+            result.BubbleSort(false);
+
+            Console.WriteLine(result);
+            Console.WriteLine("////");
+
+            Console.WriteLine(this);
+            for (int i = 0; i < count; ++i)
+            {
+                for (int j = i; j < count; ++j)
+                {
+                    if (body[i] < body[j])
+                        body[i].Swap(ref body[j]);
+                }
+
+                Console.WriteLine("---------------");
+                
+                MyArray bubbleSortArray = this;
+                MyArray selectionSortArray = this;
+                //dedede
+                Console.WriteLine(bubbleSortArray);
+                Console.WriteLine(selectionSortArray);
+
+                bubbleSortArray.BubbleSort(false);
+                selectionSortArray.SelectSort();
+
+                Console.WriteLine(bubbleSortArray);
+                Console.WriteLine(selectionSortArray);
+                if (this == result)
+                {
+                    Console.WriteLine("DONE");
+                    break;
+                }
+
+            }
+
         }
 
         #endregion
