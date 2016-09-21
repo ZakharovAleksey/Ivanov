@@ -5,6 +5,8 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "1.LevenshteinDistance", "IvanovProject\1.LevenshteinDistance.csproj", "{67ACC600-DD88-4237-AA62-3762546D1C11}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "2.SelectVSBubbleSort", "2.SelectVSBubbleSort\2.SelectVSBubbleSort.csproj", "{96049F57-5692-428F-AFBB-E912A351D8CC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{67ACC600-DD88-4237-AA62-3762546D1C11}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{67ACC600-DD88-4237-AA62-3762546D1C11}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{67ACC600-DD88-4237-AA62-3762546D1C11}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96049F57-5692-428F-AFBB-E912A351D8CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96049F57-5692-428F-AFBB-E912A351D8CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96049F57-5692-428F-AFBB-E912A351D8CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96049F57-5692-428F-AFBB-E912A351D8CC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
