@@ -20,66 +20,118 @@ namespace SelectVSBubbleSort
     {
         public static Random rand = new Random();
 
-        public static void Swap(ref MyInt left, ref MyInt right)
+        public static void BubbleSort(MyArray Array)
         {
-            MyInt.AssigmentCount += 2;
-            MyInt temp = left;
-            left = right;
-            right = temp;
+            MyArray array = new MyArray(Array);
+
+            for (int i = 0; i < array.Count - 1; ++i)
+                for (int j = i + 1; j < array.Count; ++j)
+                    if (array[i] > array[j])
+                    {
+                        MyInt temp = new MyInt(array[i]);
+                        array[i].Assigment(array[j]);
+                        array[j].Assigment(temp);
+                    }
+
+            //Console.WriteLine("AFTER : {0}", array);
+
+            Console.WriteLine("Bubble assigmnet = {0}", MyInt.AssigmentCount);
+            Console.WriteLine("Bubble compare = {0}", MyInt.CompareCount);
+
+            MyInt.AssigmentCount = 0;
+            MyInt.CompareCount = 0;
+        }
+
+
+        public static void  SelectionSort(MyArray array)
+        {
+            MyInt min = new MyInt(array[0]);
+            int minID = 0;
+
+            for (int i = 0; i < array.Count - 1; ++i)
+            {
+                // Update minimum element value and ID
+                min.Assigment(array[i]);
+                minID = i;
+
+                // Search minimum element in array
+                for (int j = i + 1; j < array.Count; ++j)
+                    // Change here for determ sequense order
+                    if (array[j] > min)
+                    {
+                        min.Assigment(array[j]);
+                        minID = j;
+                    }
+                // Swap current and minimum element
+
+                if (array[minID] != array[i])
+                {
+                    MyInt temp = new MyInt(array[minID]);
+                    array[minID].Assigment(array[i]);
+                    array[i].Assigment(temp);
+                }
+            }
+
+            Console.WriteLine("INSIDE SELECT array = {0}", array);
+
+            Console.WriteLine("Bubble assigmnet = {0}", MyInt.AssigmentCount);
+            Console.WriteLine("Bubble compare = {0}", MyInt.CompareCount);
+
+            MyInt.AssigmentCount = 0;
+            MyInt.CompareCount = 0;
+        }
+
+        public static void Solver(MyArray array)
+        {
+            //MyArray bubbleArray = new MyArray(array);
+            //MyArray selectArray = new MyArray(array);
+            BubbleSort(array);
+            Console.WriteLine("INITIAL = {0}", array);
+            //Console.WriteLine("bubble array = {0}", bubbleArray);
+            //Console.WriteLine("select array = {0}", selectArray);
+
+            for (int i = 0; i < array.Count - 1; ++i)
+            {
+                Console.WriteLine("Step {0}!!!",i);
+                // One Bubble sort step
+                for (int j = i + 1; j < array.Count; ++j)
+                    if (array[i] < array[j])
+                    {
+                        MyInt temp = new MyInt(array[i]);
+                        array[i].Assigment(array[j]);
+                        array[j].Assigment(temp);
+                    }
+
+                MyInt.AssigmentCount = 0;
+                MyInt.CompareCount = 0;
+
+                MyArray bubbleArray = new MyArray(array);
+                Console.WriteLine("BEFORE: {0}", bubbleArray);
+                BubbleSort(bubbleArray);
+
+            }
+
+            //BubbleSort(bubbleArray);
+            //SelectionSort(selectArray);
+
+
+
+
+            //Console.WriteLine("array = {0}", array);
+            //Console.WriteLine("bubble array = {0}", bubbleArray);
+            //Console.WriteLine("select array = {0}", selectArray);
         }
 
         static void Main(string[] args)
         {
-
-            //MyInt a = new MyInt(2);
-            //MyInt b = new MyInt(3);
-
-            //Console.WriteLine(a);
-            //Console.WriteLine(b);
-
-            //Console.WriteLine("a Assigment: {0}", MyInt.AssigmentCount);
-            //Console.WriteLine("a Compare: {0}", MyInt.CompareCount);
-            //Swap(ref a, ref b);
-            //Console.WriteLine(a);
-            //Console.WriteLine(b);
-            //if(a < b)
-            //    Console.WriteLine("lol");
-            //if(a > b)
-            //    Console.WriteLine("lol");
-            //if(a == b)
-            //    Console.WriteLine("lol");
-
-            //if(a!= b)
-            //    Console.WriteLine("lol");
-            //a.Assigment(ref b);
-            //Console.WriteLine(a);
-            //Console.WriteLine(b);
-
-            //Console.WriteLine("b Assigment: {0}", MyInt.AssigmentCount);
-            //Console.WriteLine("b Compare: {0}", MyInt.CompareCount);
-
-
             MyArray array = new MyArray(10);
-            array.fillArrayWithRandomValues(ref rand, 0, 100);
-            //Console.WriteLine(array);
-            //array.BubbleSort();
-            //Console.WriteLine(array);
+            for (int i = 0; i < 10; ++i)
+                array[i] = new MyInt(i);
 
-            //Console.WriteLine("Assigment: {0}", MyInt.AssigmentCount);
-            //Console.WriteLine("Compare: {0}", MyInt.CompareCount);
-            //Console.WriteLine("-------------------------");
-            //MyArray array1 = new MyArray(10);
-            //array1.fillArrayWithRandomValues(ref rand, 0, 100);
-            //Console.WriteLine(array1);
-            //array1.SelectSort();
-            //Console.WriteLine(array1);
-
-            //Console.WriteLine("Assigment: {0}", MyInt.AssigmentCount);
-            //Console.WriteLine("Compare: {0}", MyInt.CompareCount);
-
-            array.Solver();
-
-
+            //array.fillArrayWithRandomValues(ref rand, 0, 10);
+            Solver(array);
         }
+
+            
     }
 }

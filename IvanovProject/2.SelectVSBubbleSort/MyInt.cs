@@ -91,19 +91,10 @@ namespace SelectVSBubbleSort
 
         #region Assigment operator
 
-        public void Assigment(ref MyInt other)
+        public void Assigment(MyInt other)
         {
             ++assigmentCount;
             this.value = other.value;
-        }
-
-        public void Swap(ref MyInt other)
-        {
-            assigmentCount += 3;
-
-            int temp = value;
-            value = other.value;
-            other.value = temp;
         }
 
         #endregion
