@@ -77,6 +77,21 @@ namespace SelectVSBubbleSort
         }
 
 
+        public void Sort()
+        {
+            for (int i = 0; i < count - 1; ++i)
+                for (int j = i + 1; j < count; ++j)
+                    if (body[i] > body[j])
+                    {
+                        MyInt temp = new MyInt(body[i]);
+                        body[i] = body[j];
+                        body[j] = temp;
+                    }
+
+            MyInt.AssigmentCount = 0;
+            MyInt.CompareCount = 0;
+        }
+
         #endregion
 
         public override string ToString()

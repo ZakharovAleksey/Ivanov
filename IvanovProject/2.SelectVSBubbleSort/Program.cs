@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,14 +14,36 @@ namespace SelectVSBubbleSort
     /// - График зависимости числа сравнений от номера колонки
     /// - График зависимости числа перестановок от длинны массива
     /// - График зависимости числа сравнений от длины массива
-    /// - Время работы от номера колонки
-    /// - Время работы от длины массива
+    /// - Время работы от номера колонки (НЕ НАДО)
+    /// - Время работы от длины массива (НЕ НАДО)
     /// </summary>
     class Program
     {
+        enum SortType
+        {
+            BUBBLE_SORT = 0,
+            SELECTION_SORT = 1
+        }
+
+        enum TaskType
+        {
+            COMPARE_ASSIGMENT_FROM_ID = 0,
+            COMPARE_ASSIGMENT_FROM_LENGTH = 1,
+            TIME_FROM_ID = 2,
+            TIME_FROM_LENGTH = 3
+        }
+
+        public static StreamWriter bubbleSWComparefromID;
+        public static StreamWriter bubbleSWAssigmentfromID;
+
+        public static StreamWriter selectionSWComparefromID;
+        public static StreamWriter selectionSWAssigmentfromID;
+
         public static Random rand = new Random();
 
-        public static void BubbleSort(MyArray Array)
+
+
+        public static void BubbleSort(MyArray Array, int taskType, int currentExecutionStepsCount = 0)
         {
             MyArray array = new MyArray(Array);
 
@@ -33,67 +56,61 @@ namespace SelectVSBubbleSort
                         array[j].Assigment(temp);
                     }
 
-            //Console.WriteLine("AFTER : {0}", array);
+            //Console.WriteLine("Bubble assigmnet = {0}", MyInt.AssigmentCount);
+            //Console.WriteLine("Bubble compare = {0}", MyInt.CompareCount);
 
-            Console.WriteLine("Bubble assigmnet = {0}", MyInt.AssigmentCount);
-            Console.WriteLine("Bubble compare = {0}", MyInt.CompareCount);
+            switch (taskType)
+            {
+                case (int)TaskType.COMPARE_ASSIGMENT_FROM_ID:
+                    bubbleSWComparefromID.WriteLine("{0} {1}", currentExecutionStepsCount, MyInt.CompareCount);
+                    bubbleSWAssigmentfromID.WriteLine("{0} {1}", currentExecutionStepsCount, MyInt.AssigmentCount);
+                    break;
+            }
+            
 
             MyInt.AssigmentCount = 0;
             MyInt.CompareCount = 0;
         }
 
-
-        public static void  SelectionSort(MyArray array)
+        public static void SelectionSort(MyArray array, int taskType, int currentExecutionStepsCount = 0)
         {
-            MyInt min = new MyInt(array[0]);
-            int minID = 0;
+            MyInt minID = new MyInt(0);
 
             for (int i = 0; i < array.Count - 1; ++i)
             {
-                // Update minimum element value and ID
-                min.Assigment(array[i]);
-                minID = i;
+                // Set Minimum element ID equal to current element ID
+                minID.Assigment(new MyInt(i));
 
                 // Search minimum element in array
                 for (int j = i + 1; j < array.Count; ++j)
-                    // Change here for determ sequense order
-                    if (array[j] > min)
+                    if (array[j] < array[minID.Value])
                     {
-                        min.Assigment(array[j]);
-                        minID = j;
+                        minID.Assigment(new MyInt(j));
                     }
                 // Swap current and minimum element
-
-                if (array[minID] != array[i])
-                {
-                    MyInt temp = new MyInt(array[minID]);
-                    array[minID].Assigment(array[i]);
-                    array[i].Assigment(temp);
-                }
+                MyInt temp = new MyInt(array[minID.Value]);
+                array[minID.Value].Assigment(array[i]);
+                array[i].Assigment(temp);
             }
 
-            Console.WriteLine("INSIDE SELECT array = {0}", array);
+            //Console.WriteLine("Selection assigmnet = {0}", MyInt.AssigmentCount);
+            //Console.WriteLine("Selection compare = {0}", MyInt.CompareCount);
 
-            Console.WriteLine("Bubble assigmnet = {0}", MyInt.AssigmentCount);
-            Console.WriteLine("Bubble compare = {0}", MyInt.CompareCount);
+            switch (taskType)
+            {
+                case (int)TaskType.COMPARE_ASSIGMENT_FROM_ID:
+                    selectionSWComparefromID.WriteLine("{0} {1}", currentExecutionStepsCount, MyInt.CompareCount);
+                    selectionSWAssigmentfromID.WriteLine("{0} {1}", currentExecutionStepsCount, MyInt.AssigmentCount);
+                    break;
+            }
 
             MyInt.AssigmentCount = 0;
             MyInt.CompareCount = 0;
         }
 
-        public static void Solver(MyArray array)
+        public static void bubbleSortStep(ref MyArray array, int executionStepCount)
         {
-            //MyArray bubbleArray = new MyArray(array);
-            //MyArray selectArray = new MyArray(array);
-            BubbleSort(array);
-            Console.WriteLine("INITIAL = {0}", array);
-            //Console.WriteLine("bubble array = {0}", bubbleArray);
-            //Console.WriteLine("select array = {0}", selectArray);
-
-            for (int i = 0; i < array.Count - 1; ++i)
-            {
-                Console.WriteLine("Step {0}!!!",i);
-                // One Bubble sort step
+            for (int i = 0; i < executionStepCount; ++i)
                 for (int j = i + 1; j < array.Count; ++j)
                     if (array[i] < array[j])
                     {
@@ -102,34 +119,79 @@ namespace SelectVSBubbleSort
                         array[j].Assigment(temp);
                     }
 
-                MyInt.AssigmentCount = 0;
-                MyInt.CompareCount = 0;
+            MyInt.AssigmentCount = 0;
+            MyInt.CompareCount = 0;
 
-                MyArray bubbleArray = new MyArray(array);
-                Console.WriteLine("BEFORE: {0}", bubbleArray);
-                BubbleSort(bubbleArray);
 
+        }
+
+        public static void Solver(MyArray array, int currentSortType)
+        {
+
+            array.Sort();
+
+            switch (currentSortType)
+            {
+                case (int)SortType.BUBBLE_SORT:
+                    BubbleSort(array, (int)TaskType.COMPARE_ASSIGMENT_FROM_ID, 0);
+                    break;
+                case (int)SortType.SELECTION_SORT:
+                    SelectionSort(array, (int)TaskType.COMPARE_ASSIGMENT_FROM_ID, 0);
+                    break;
+                default:
+                    throw  new ArgumentException("Wrong ID input");
             }
 
-            //BubbleSort(bubbleArray);
-            //SelectionSort(selectArray);
+            int currentExecutionStepsCount = 1;
 
+            while (currentExecutionStepsCount != array.Count)
+            {
+                bubbleSortStep(ref array, currentExecutionStepsCount);
 
+                switch (currentSortType)
+                {
+                    case (int)SortType.BUBBLE_SORT:
+                        BubbleSort(array, (int)TaskType.COMPARE_ASSIGMENT_FROM_ID, currentExecutionStepsCount);
+                        break;
+                    case (int)SortType.SELECTION_SORT:
+                        SelectionSort(array, (int)TaskType.COMPARE_ASSIGMENT_FROM_ID, currentExecutionStepsCount);
+                        break;
+                    default:
+                        throw new ArgumentException("Wrong ID input");
+                }
 
-
-            //Console.WriteLine("array = {0}", array);
-            //Console.WriteLine("bubble array = {0}", bubbleArray);
-            //Console.WriteLine("select array = {0}", selectArray);
+                ++currentExecutionStepsCount;
+            }
         }
+
 
         static void Main(string[] args)
         {
-            MyArray array = new MyArray(10);
-            for (int i = 0; i < 10; ++i)
-                array[i] = new MyInt(i);
+            int size = 1000;
+            MyArray array = new MyArray(size);
 
-            //array.fillArrayWithRandomValues(ref rand, 0, 10);
-            Solver(array);
+
+            bubbleSWComparefromID = new StreamWriter(@"Data/bubleCompareFromID(length_" + size.ToString() + ").txt");
+            bubbleSWAssigmentfromID = new StreamWriter(@"Data/bubleAssigmentFromID(length_" + size.ToString() + ").txt");
+
+            selectionSWComparefromID = new StreamWriter(@"Data/selectCompareFromID(length_" + size.ToString() + ").txt");
+            selectionSWAssigmentfromID = new StreamWriter(@"Data/selectAssigmentFromID(length_" + size.ToString() + ").txt");
+
+
+            array.fillArrayWithRandomValues(ref rand, int.MinValue, int.MaxValue);
+
+            
+            Solver(array, (int)SortType.BUBBLE_SORT);
+            Solver(array, (int)SortType.SELECTION_SORT);
+
+
+
+            bubbleSWComparefromID.Close();
+            bubbleSWAssigmentfromID.Close();
+            selectionSWComparefromID.Close();
+            selectionSWAssigmentfromID.Close();
+
+            Console.WriteLine("Calculations finished successfully!");
         }
 
             
