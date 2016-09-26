@@ -235,10 +235,10 @@ namespace SelectVSBubbleSort
                 selectionArray.fillArrayWithRandomValues(ref rand, int.MinValue, int.MaxValue);
                 SelectionSort(selectionArray, (int)TaskType.COMPARE_ASSIGMENT_FROM_LENGTH);
 
-                if (arrayCurrentSize < 2000)
-                    arrayCurrentSize += 10;
-                else
-                    arrayCurrentSize += arrayCurrentSize;
+                //if (arrayCurrentSize < 2000)
+                    //arrayCurrentSize += 10;
+                //else
+                    arrayCurrentSize += 5000;
             }
 
             // Close output files
@@ -257,11 +257,11 @@ namespace SelectVSBubbleSort
         public static void Solver(int arraySize)
         {
             // Initilize output files
-            bubbleSWComparefromID = new StreamWriter(@"Data\bubleCompareFromID(length_" + arraySize.ToString() + ").txt");
-            bubbleSWAssigmentfromID = new StreamWriter(@"Data\bubleAssigmentFromID(length_" + arraySize.ToString() + ").txt");
+            bubbleSWComparefromID = new StreamWriter(@"Data\Bubble Sort Compare ID.txt");
+            bubbleSWAssigmentfromID = new StreamWriter(@"Data\Buble Sort Assigment ID.txt");
 
-            selectionSWComparefromID = new StreamWriter(@"Data\selectCompareFromID(length_" + arraySize.ToString() + ").txt");
-            selectionSWAssigmentfromID = new StreamWriter(@"Data\selectAssigmentFromID(length_" + arraySize.ToString() + ").txt");
+            selectionSWComparefromID = new StreamWriter(@"Data\Select Sort Compare ID.txt");
+            selectionSWAssigmentfromID = new StreamWriter(@"Data\Select Sort Assigment ID.txt");
 
             // Initilize array
             MyArray array = new MyArray(arraySize);
@@ -284,11 +284,11 @@ namespace SelectVSBubbleSort
         static void Main(string[] args)
         {
             // Calculate Compare/Assigment(ID) dependancy
-            Solver(10);
+            Solver(1000);
 
             // Calculate Compare/Assigment(Length) dependancy
             // Не плохо от 10 до 1000 прибаляя по 10
-            Solver(10, 1000);
+            //Solver(10000, 100000);
 
             Console.WriteLine("Calculations finished successfully!");
         }
