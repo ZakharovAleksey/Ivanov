@@ -14,7 +14,9 @@ namespace SelectVSBubbleSort
     {
         #region Fields
 
+        // Count of executed Compare operations
         static int compareCount = 0;
+        // Count of executed Assigment operations
         static int assigmentCount = 0;
 
         int value = 0;
@@ -91,6 +93,10 @@ namespace SelectVSBubbleSort
 
         #region Assigment operator
 
+        /// <summary>
+        /// Execute Assigment operation
+        /// </summary>
+        /// <param name="other"> Value for assigment to current MyInt object </param>
         public void Assigment(MyInt other)
         {
             ++assigmentCount;

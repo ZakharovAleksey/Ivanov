@@ -9,12 +9,13 @@ namespace SelectVSBubbleSort
     class MyArray
     {
         #region Fields
-        // Count of compare operations
+        // Count of compare operations for this Array
         int compareCount = 0;
-        // Count of assigment operations
+        // Count of assigment operations for this Array
         int assigmentCount = 0;
 
         MyInt[] body;
+
         // Array size
         int count = 0;
 
@@ -76,7 +77,9 @@ namespace SelectVSBubbleSort
                 body[i].Value = rand.Next(minValue, maxValue);           
         }
 
-
+        /// <summary>
+        /// Bubble Sort implementation method
+        /// </summary>
         public void Sort()
         {
             for (int i = 0; i < count - 1; ++i)
