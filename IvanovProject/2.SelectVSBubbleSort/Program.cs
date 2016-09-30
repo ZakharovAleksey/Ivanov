@@ -33,6 +33,8 @@ namespace SelectVSBubbleSort
             // TIME_FROM_LENGTH = 3
         }
 
+        #region StreamWriter Region
+
         // Output stream writer objectss for ID dependancy
         public static StreamWriter bubbleSWComparefromID;
         public static StreamWriter bubbleSWAssigmentfromID;
@@ -46,6 +48,8 @@ namespace SelectVSBubbleSort
 
         public static StreamWriter selectSWCompareFromLength;
         public static StreamWriter selectSWAssigmentFromLength;
+
+        #endregion
 
         // Random object
         public static Random rand = new Random();
