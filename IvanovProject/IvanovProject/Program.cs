@@ -26,8 +26,8 @@ namespace IvanovProject
         {
             for (int y = 0; y < array.GetLength(0); ++y)
             {
-                for(int x = 0; x < array.GetLength(1); ++x)
-                    Console.Write(array[y,x] + " ");
+                for (int x = 0; x < array.GetLength(1); ++x)
+                    Console.Write(array[y, x] + " ");
                 Console.WriteLine();
             }
         }
@@ -42,7 +42,7 @@ namespace IvanovProject
         /// <param name="substitute"> weight of substitute operation </param>
         /// <param name="remove"> weight of remove operation </param>
         /// <returns> Levenshtein Distance </returns>
-        static long LevenshteinDistanceSolver(string collString, string rowString, ref long executionTime, 
+        static long LevenshteinDistanceSolver(string collString, string rowString, ref long executionTime,
             int insert = 1, int substitute = 1, int remove = 1)
         {
             // long startTime = DateTime.Now.Millisecond;
@@ -90,6 +90,8 @@ namespace IvanovProject
             return matrix[rowString.Length, collString.Length];
         }
 
+        #region Random String Solver
+
         /// <summary>
         /// Generate random string with a predetermined length
         /// </summary>
@@ -124,7 +126,10 @@ namespace IvanovProject
             initialString += additionString;
         }
 
-        static void Main(string[] args)
+        /// <summary>
+        /// Find Lwvinstain distanse for rndomly generated strings
+        /// </summary>
+        static void randomStringSolver()
         {
             // Length of inital string
             int initialLength = 100;    //500
@@ -136,10 +141,10 @@ namespace IvanovProject
             int removeCost = 1;
             int substituteCost = 2;
 
-            string fileNameLength = @"Data\distanceIns" + 
-                insertCost.ToString() + "Rem" + 
-                removeCost.ToString() + "Sub" + 
-                substituteCost.ToString()+ ".txt";
+            string fileNameLength = @"Data\distanceIns" +
+                insertCost.ToString() + "Rem" +
+                removeCost.ToString() + "Sub" +
+                substituteCost.ToString() + ".txt";
 
             StreamWriter distanceStreamWriter = new StreamWriter(fileNameLength);
 
@@ -183,6 +188,67 @@ namespace IvanovProject
                 distanceStreamWriter.Close();
                 timeStreamWriter.Close();
             }
+        }
+
+        #endregion
+
+        #region Text Solver
+
+        public static string[] getText(string path)
+        {
+            string text = File.ReadAllText(path);
+            StringBuilder tempText = new StringBuilder();
+
+            foreach (char curSymb in text)
+            {
+                if (!char.IsPunctuation(curSymb) && curSymb != '\n')
+                    tempText.Append(curSymb);
+            }
+            text = tempText.ToString();
+
+            return text.Split(' ');
+        }
+
+        public static string getTextString(string[] textGlossary, int wordCount)
+        {
+            string str = "";
+            for (int curWordCount = 0; curWordCount < wordCount; ++curWordCount)
+            {
+                str += textGlossary[rand.Next(0, textGlossary.Length)] + ' ';
+            }
+            return str;
+
+        }
+
+        public static void textSolver(int insertCost = 1, int removeCost = 1, int substituteCost = 1)
+        {
+            string[] textGlossary = getText(@"Data\Text\text.txt");
+            //foreach (string s in textGlossary)
+            //    Console.WriteLine(s);
+
+
+            for (int wordCount = 10; wordCount < 15; wordCount++)
+            {
+                string row = getTextString(textGlossary, wordCount);
+                //Console.WriteLine(row);
+                
+                string coll = getTextString(textGlossary, wordCount);
+                //Console.WriteLine(coll);
+
+                long executionTime = 0;
+                long distance = 0;
+
+                distance = LevenshteinDistanceSolver(coll, row, ref executionTime, insertCost, substituteCost, removeCost);
+                Console.WriteLine("Levinstaine dist = {0}", distance);
+            }
+        }
+
+        #endregion
+
+        static void Main(string[] args)
+        {
+            //randomStringSolver();
+            textSolver();
         }
     }
 }
