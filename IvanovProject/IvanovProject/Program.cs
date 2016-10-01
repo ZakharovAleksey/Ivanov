@@ -220,27 +220,37 @@ namespace IvanovProject
 
         }
 
-        public static void textSolver(int insertCost = 1, int removeCost = 1, int substituteCost = 1)
+        public static void textSolver(int insertCost = 10, int removeCost = 8, int substituteCost = 5)
         {
             string[] textGlossary = getText(@"Data\Text\text.txt");
-            //foreach (string s in textGlossary)
-            //    Console.WriteLine(s);
 
+            StreamWriter sw = new StreamWriter(@"Data\Text\Result\Length.txt");
+            StreamWriter sw1 = new StreamWriter(@"Data\Text\Result\Time.txt");
 
-            for (int wordCount = 10; wordCount < 15; wordCount++)
+            int i = 0;
+
+            for (int wordCount = 30; wordCount < 100; /*wordCount++*/)
             {
                 string row = getTextString(textGlossary, wordCount);
-                //Console.WriteLine(row);
                 
                 string coll = getTextString(textGlossary, wordCount);
-                //Console.WriteLine(coll);
 
                 long executionTime = 0;
                 long distance = 0;
 
                 distance = LevenshteinDistanceSolver(coll, row, ref executionTime, insertCost, substituteCost, removeCost);
+
+                sw.WriteLine("{0} {1}", /*row.Length + coll.Length*/ i, distance);
+                sw1.WriteLine("{0} {1}", /*row.Length + coll.Length*/ i, executionTime);
+
                 Console.WriteLine("Levinstaine dist = {0}", distance);
+                Console.WriteLine("Execution time = {0}", executionTime);
+                ++i;
+                if (i > 100)
+                    break;
             }
+            sw.Close();
+            sw1.Close();
         }
 
         #endregion
