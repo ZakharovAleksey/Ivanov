@@ -211,7 +211,7 @@ namespace SelectVSBubbleSort
         /// </summary>
         /// <param name="arrayCurrentSize"> Input initial array size </param>
         /// <param name="arrayMaxSize"> Maximum array size</param>
-        public static void Solver(int arrayCurrentSize, int arrayMaxSize)
+        public static void SolverForLength(int arrayCurrentSize, int arrayMaxSize)
         {
             // Initilize output files
             bubbleSWCompareFromLength = new StreamWriter(@"Data\Bubble Sort Compare Length.txt");
@@ -254,7 +254,7 @@ namespace SelectVSBubbleSort
         /// Calculate Assigment and Compare dependancy from column ID
         /// </summary>
         /// <param name="arraySize"> Array size </param>
-        public static void Solver(int arraySize)
+        public static void SolverForID(int arraySize)
         {
             // Initilize output files
             bubbleSWComparefromID = new StreamWriter(@"Data\Bubble Sort Compare ID.txt");
@@ -266,9 +266,12 @@ namespace SelectVSBubbleSort
             // Initilize array
             MyArray array = new MyArray(arraySize);
             array.fillArrayWithRandomValues(ref rand, int.MinValue, int.MaxValue);
+            //Console.WriteLine(array);
 
             // Calculate Assigment and Compare dependancy
             IDSolver(array, (int)SortType.BUBBLE_SORT);
+            array.fillArrayWithRandomValues(ref rand, int.MinValue, int.MaxValue);
+            //Console.WriteLine(array);
             IDSolver(array, (int)SortType.SELECTION_SORT);
 
 
@@ -284,11 +287,11 @@ namespace SelectVSBubbleSort
         static void Main(string[] args)
         {
             // Calculate Compare/Assigment(ID) dependancy
-            Solver(1000);
+            SolverForID(150);
 
             // Calculate Compare/Assigment(Length) dependancy
             // Не плохо от 10 до 1000 прибаляя по 10
-            //Solver(10000, 100000);
+            //SolverForLength(10000, 100000);
 
             Console.WriteLine("Calculations finished successfully!");
         }
