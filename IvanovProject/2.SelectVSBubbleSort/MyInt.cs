@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace SelectVSBubbleSort
 {
-
     /// <summary>
     /// Implementation my datatype int for good assignment and compare operations calculation
     /// </summary>
@@ -65,7 +64,7 @@ namespace SelectVSBubbleSort
 
         #region Compare operators
 
-        public static bool operator<(MyInt left, MyInt right)
+        public static bool operator <(MyInt left, MyInt right)
         {
             ++compareCount;
             return (left.value < right.value) ? true : false;
