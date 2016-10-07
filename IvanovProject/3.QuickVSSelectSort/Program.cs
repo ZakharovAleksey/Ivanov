@@ -119,7 +119,7 @@ namespace _3.QuickVSSelectSort
         void SolverLenght(MyArray array)
         {
             
-
+            //lockal
         }
 
         #endregion
