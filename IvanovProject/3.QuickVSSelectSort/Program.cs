@@ -118,7 +118,7 @@ namespace _3.QuickVSSelectSort
 
         void SolverLenght(MyArray array)
         {
-            
+            // hello
 
         }
 
