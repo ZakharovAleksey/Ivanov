@@ -118,13 +118,9 @@ namespace _3.QuickVSSelectSort
 
         void SolverLenght(MyArray array)
         {
-<<<<<<< HEAD
             // hello
-
-=======
-            
+   
             //lockal
->>>>>>> refs/remotes/origin/master
         }
 
         #endregion
