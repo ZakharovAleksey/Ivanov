@@ -36,19 +36,35 @@ namespace _3.QuickVSSelectSort
             return res;
         }
 
-        public void BubbleSortStep(int stepCount)
+        public void BubbleSortStep(int stepCount, bool less)
         {
             Debug.Assert(stepCount <= Size - 1, "Step Count index must be less then " + Size.ToString() + " !");
 
             for (int i = 0; i < stepCount; ++i)
+            {
                 for (int j = i + 1; j < Size; ++j)
-                    if (Body[i] > Body[j])
+                {
+                    if (less)
                     {
-                        MyInt temp = Body[i];
-                        Body[i] = Body[j];
-                        Body[j] = temp;
+                        if (Body[i] > Body[j])
+                        {
+                            MyInt temp = Body[i];
+                            Body[i] = Body[j];
+                            Body[j] = temp;
+                        }
+                    }
+                    else
+                    {
+                        if (Body[i] < Body[j])
+                        {
+                            MyInt temp = Body[i];
+                            Body[i] = Body[j];
+                            Body[j] = temp;
+                        }
                     }
 
+                }
+            }
             MyInt.AssigmentCount = 0;
             MyInt.CompareCount = 0;
         }

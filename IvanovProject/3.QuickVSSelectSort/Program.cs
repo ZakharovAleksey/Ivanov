@@ -111,23 +111,39 @@ namespace _3.QuickVSSelectSort
 
         #region  Solver depending on ID
 
-
-        void PrepareLeftPart(MyArray array, ref Stack<MyArray> stack)
+        static void PrepareStack(MyArray array, Stack<MyArray> stack)
         {
-            for (int curStep = 1; curStep < array.Size; ++curStep)
-            {
-                MyArray tempArray = (MyArray)array.Clone();
-                tempArray.BubbleSortStep(curStep);
-                stack.Push((MyArray)tempArray.Clone());
-            }
+
         }
 
-        void SolverID(int lenght)
+        public static void SolverID(int lenght)
         {
             MyArray array = new MyArray(lenght);
+            array.fillWithRandomValues(0, 100);
+            Console.WriteLine(array);
+            Console.WriteLine("----------------");
 
-            MyArray rightSort = (MyArray)array.Clone();
             Stack<MyArray> stack = new Stack<MyArray>();
+
+            for (int i = 1; i < lenght; ++i)
+            {
+                MyArray temp = (MyArray)array.Clone();
+                temp.BubbleSortStep(i, true);
+                stack.Push(temp);
+            }
+            
+            for()
+
+            Console.WriteLine("----------------");
+            Console.WriteLine(array);
+            Console.WriteLine("----------------");
+            for (int i = 1; i < lenght; ++i)
+            {
+                MyArray temp = (MyArray)array.Clone();
+                temp.BubbleSortStep(i, false);
+                Console.WriteLine(temp);
+            }
+            
 
 
 
@@ -212,8 +228,9 @@ namespace _3.QuickVSSelectSort
             //QuickSort(ref a, 0, a.Size - 1);
             //Console.WriteLine(a);
 
-            SolverLenght(10, 100, 10);
+            //SolverLenght(10, 100, 10);
 
+            SolverID(5);
 
             //MyArray a = new MyArray(8);
             //a.fillWithRandomValues(0, 100);
