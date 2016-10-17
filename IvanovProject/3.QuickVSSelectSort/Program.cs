@@ -19,6 +19,13 @@ namespace _3.QuickVSSelectSort
 
         #region Quick Sort
 
+        /// <summary>
+        /// Partition for QSort algorithm: separate array in to two parts [ x < </PRIVOT>] [privot] [x > </PRIVOT>]
+        /// </summary>
+        /// <param name="array"> Input array referense </param>
+        /// <param name="left"> Left border of partition procedure </param>
+        /// <param name="right"> Right border of partition procedure </param>
+        /// <returns> Index of privot position in array after procedure execution </returns>
         static int Partition(ref MyArray array, int left, int right)
         {
             // Determine privot index and value
@@ -72,11 +79,23 @@ namespace _3.QuickVSSelectSort
 
         #region Merge Sort
 
+        // READ ME: 
+        // Индексов присваивания постоянное число в задаче на ID так как всегда присваиваем ВСЕ значения частией массиву temp - не зависит от меры упорядоченности массива.
+
+        /// <summary>
+        /// Merge Procedure for MergeSort algorithm inplamentation: merge two parts in one 
+        /// </summary>
+        /// <param name="array"> Reference on array </param>
+        /// <param name="left"> Begin index of first part </param>
+        /// <param name="separator"> End of first part and in the same time begin for second part </param>
+        /// <param name="right"> End of the second part </param>
         static void Merge(ref MyArray array, int left, int separator, int right)
         {
+            // Indexes of left and right part respectively
             int curFirstPos = left;
             int curSecondPos = separator + 1;
 
+            // Index in temp array
             int curTempPos = 0;
             MyArray temp = new MyArray(right - left + 1);
 
@@ -149,8 +168,9 @@ namespace _3.QuickVSSelectSort
                         throw new InvalidDataException("There is no such type of sorting");
                 }
 
-                swAssigment.WriteLine("{0} {1}", curID++, MyInt.AssigmentCount);
-                swCompare.WriteLine("{0} {1}", curID++, MyInt.CompareCount);
+                swAssigment.WriteLine("{0} {1}", curID, MyInt.AssigmentCount);
+                swCompare.WriteLine("{0} {1}", curID, MyInt.CompareCount);
+                ++curID;
 
                 stack.Pop();
             }
@@ -179,10 +199,9 @@ namespace _3.QuickVSSelectSort
                         throw new InvalidDataException("There is no such type of sorting");
                 }
 
-                swAssigment.WriteLine("{0} {1}", curID++, MyInt.AssigmentCount);
-                swCompare.WriteLine("{0} {1}", curID++, MyInt.CompareCount);
-
-                Console.WriteLine(temp);
+                swAssigment.WriteLine("{0} {1}", curID, MyInt.AssigmentCount);
+                swCompare.WriteLine("{0} {1}", curID, MyInt.CompareCount);
+                ++curID;
             }
 
             #endregion
@@ -192,11 +211,11 @@ namespace _3.QuickVSSelectSort
         {
             #region StreamWriter Initilize
 
-            StreamWriter swQSortAssigment = new StreamWriter("QSortAssigmentID.txt");
-            StreamWriter swQSortCompare = new StreamWriter("QSortCompareID.txt");
+            StreamWriter swQSortAssigment = new StreamWriter("IDQSortAssigmentID.txt");
+            StreamWriter swQSortCompare = new StreamWriter("IDQSortCompareID.txt");
 
-            StreamWriter swMergeSortAssigment = new StreamWriter("MergeSortAssigmentID.txt");
-            StreamWriter swMergewSorCompare = new StreamWriter("MergeSortCompareID.txt");
+            StreamWriter swMergeSortAssigment = new StreamWriter("IDMergeSortAssigmentID.txt");
+            StreamWriter swMergewSortCompare = new StreamWriter("IDMergeSortCompareID.txt");
 
             #endregion
 
@@ -204,7 +223,7 @@ namespace _3.QuickVSSelectSort
             array.fillWithRandomValues(0, 100);
 
             SingleIDSolver(array, (int)SortType.Q_SORT, swQSortAssigment, swQSortCompare);
-            SingleIDSolver(array, (int)SortType.MERGE_SORT, swMergeSortAssigment, swMergewSorCompare);
+            SingleIDSolver(array, (int)SortType.MERGE_SORT, swMergeSortAssigment, swMergewSortCompare);
 
             #region StreamWriter Close
 
@@ -212,7 +231,7 @@ namespace _3.QuickVSSelectSort
             swQSortCompare.Close();
 
             swMergeSortAssigment.Close();
-            swMergewSorCompare.Close();
+            swMergewSortCompare.Close();
 
             #endregion
         }
@@ -228,11 +247,11 @@ namespace _3.QuickVSSelectSort
 
             #region StreamWriter prepare
 
-            StreamWriter qSortSWAssigment = new StreamWriter(@"QSortLenghtAssigment.txt");
-            StreamWriter qSortSWCompare = new StreamWriter(@"QSortLenghtCompare.txt");
+            StreamWriter qSortSWAssigment = new StreamWriter(@"LenQSortAssigment.txt");
+            StreamWriter qSortSWCompare = new StreamWriter(@"LenQSortCompare.txt");
 
-            StreamWriter mergeSortSWAssigment = new StreamWriter(@"MergeSortLenghtAssigment.txt");
-            StreamWriter mergeSortSWCompare = new StreamWriter(@"MergeSortLenghtCompare.txt");
+            StreamWriter mergeSortSWAssigment = new StreamWriter(@"LenMergeSortAssigment.txt");
+            StreamWriter mergeSortSWCompare = new StreamWriter(@"LenMergeSortCompare.txt");
 
             #endregion
 
@@ -251,7 +270,6 @@ namespace _3.QuickVSSelectSort
 
                 QuickSort(ref qSortArray, 0, qSortArray.Size - 1);
 
-                Console.WriteLine("QSORT: compare = {0}, assigment = {1}", MyInt.CompareCount, MyInt.AssigmentCount);
                 qSortSWAssigment.WriteLine("{0} {1}", qSortArray.Size, MyInt.AssigmentCount);
                 qSortSWCompare.WriteLine("{0} {1}", qSortArray.Size, MyInt.CompareCount);
 
@@ -264,7 +282,6 @@ namespace _3.QuickVSSelectSort
 
                 MergeSort(ref mergeSortArray, 0, mergeSortArray.Size - 1);
 
-                Console.WriteLine("MERGESORT: compare = {0}, assigment = {1}", MyInt.CompareCount, MyInt.AssigmentCount);
                 mergeSortSWAssigment.WriteLine("{0} {1}", mergeSortArray.Size, MyInt.AssigmentCount);
                 mergeSortSWCompare.WriteLine("{0} {1}", mergeSortArray.Size, MyInt.CompareCount);
 
@@ -289,8 +306,15 @@ namespace _3.QuickVSSelectSort
 
         static void Main(string[] args)
         {
-
-            SolverID(10);
+            try
+            {
+                SolverID(100);
+                //SolverLenght(10, 100, 10);
+            }
+            catch (InvalidDataException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
 
         }
     }
