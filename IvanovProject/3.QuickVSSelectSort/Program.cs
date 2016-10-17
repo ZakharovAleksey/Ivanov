@@ -9,6 +9,12 @@ namespace _3.QuickVSSelectSort
 {
     class Program
     {
+        public enum SortType
+        {
+            Q_SORT = 0,
+            MERGE_SORT = 1
+        }
+
         static public Random rand = new Random();
 
         #region Quick Sort
@@ -111,46 +117,107 @@ namespace _3.QuickVSSelectSort
 
         #region  Solver depending on ID
 
-        static void PrepareStack(MyArray array, Stack<MyArray> stack)
+        public static void SingleIDSolver(MyArray array, int sortType, StreamWriter swAssigment, StreamWriter swCompare)
         {
-
-        }
-
-        public static void SolverID(int lenght)
-        {
-            MyArray array = new MyArray(lenght);
-            array.fillWithRandomValues(0, 100);
-            Console.WriteLine(array);
-            Console.WriteLine("----------------");
-
+            int curID = 0;
             Stack<MyArray> stack = new Stack<MyArray>();
 
-            for (int i = 1; i < lenght; ++i)
+            #region Calculation in sorted in descending order part
+
+            for (int i = 1; i < array.Size; ++i)
             {
                 MyArray temp = (MyArray)array.Clone();
                 temp.BubbleSortStep(i, true);
                 stack.Push(temp);
             }
-            
-            for()
 
-            Console.WriteLine("----------------");
-            Console.WriteLine(array);
-            Console.WriteLine("----------------");
-            for (int i = 1; i < lenght; ++i)
+            while (stack.Count != 0)
+            {
+                MyInt.AssigmentCount = 0;
+                MyInt.CompareCount = 0;
+
+                MyArray topArray = stack.Peek();
+                switch (sortType)
+                {
+                    case (int)SortType.Q_SORT:
+                        QuickSort(ref topArray, 0, topArray.Size -1);
+                        break;
+                    case (int)SortType.MERGE_SORT:
+                        MergeSort(ref topArray, 0, topArray.Size - 1);
+                        break;
+                    default:
+                        throw new InvalidDataException("There is no such type of sorting");
+                }
+
+                swAssigment.WriteLine("{0} {1}", curID++, MyInt.AssigmentCount);
+                swCompare.WriteLine("{0} {1}", curID++, MyInt.CompareCount);
+
+                stack.Pop();
+            }
+
+            #endregion
+
+            #region  Calculation in sorted in ascending part
+
+            for (int i = 1; i < array.Size; ++i)
             {
                 MyArray temp = (MyArray)array.Clone();
                 temp.BubbleSortStep(i, false);
+
+                MyInt.AssigmentCount = 0;
+                MyInt.CompareCount = 0;
+
+                switch (sortType)
+                {
+                    case (int)SortType.Q_SORT:
+                        QuickSort(ref temp, 0, temp.Size - 1);
+                        break;
+                    case (int)SortType.MERGE_SORT:
+                        MergeSort(ref temp, 0, temp.Size - 1);
+                        break;
+                    default:
+                        throw new InvalidDataException("There is no such type of sorting");
+                }
+
+                swAssigment.WriteLine("{0} {1}", curID++, MyInt.AssigmentCount);
+                swCompare.WriteLine("{0} {1}", curID++, MyInt.CompareCount);
+
                 Console.WriteLine(temp);
             }
-            
 
+            #endregion
+        }
 
+        public static void SolverID(int arraySize)
+        {
+            #region StreamWriter Initilize
 
+            StreamWriter swQSortAssigment = new StreamWriter("QSortAssigmentID.txt");
+            StreamWriter swQSortCompare = new StreamWriter("QSortCompareID.txt");
+
+            StreamWriter swMergeSortAssigment = new StreamWriter("MergeSortAssigmentID.txt");
+            StreamWriter swMergewSorCompare = new StreamWriter("MergeSortCompareID.txt");
+
+            #endregion
+
+            MyArray array = new MyArray(arraySize);
+            array.fillWithRandomValues(0, 100);
+
+            SingleIDSolver(array, (int)SortType.Q_SORT, swQSortAssigment, swQSortCompare);
+            SingleIDSolver(array, (int)SortType.MERGE_SORT, swMergeSortAssigment, swMergewSorCompare);
+
+            #region StreamWriter Close
+
+            swQSortAssigment.Close();
+            swQSortCompare.Close();
+
+            swMergeSortAssigment.Close();
+            swMergewSorCompare.Close();
+
+            #endregion
         }
 
         #endregion
-
 
         #region Solver depending on Length
 
@@ -222,22 +289,8 @@ namespace _3.QuickVSSelectSort
 
         static void Main(string[] args)
         {
-            //MyArray a = new MyArray(8);
-            //a.fillWithRandomValues(0, 100);
-            //Console.WriteLine(a);
-            //QuickSort(ref a, 0, a.Size - 1);
-            //Console.WriteLine(a);
 
-            //SolverLenght(10, 100, 10);
-
-            SolverID(5);
-
-            //MyArray a = new MyArray(8);
-            //a.fillWithRandomValues(0, 100);
-            //Console.WriteLine(a);
-            ////Merge(ref a, 0, 1, a.Size - 1);
-            //MergeSort(ref a, 0, a.Size - 1);
-            //Console.WriteLine(a);
+            SolverID(10);
 
         }
     }
