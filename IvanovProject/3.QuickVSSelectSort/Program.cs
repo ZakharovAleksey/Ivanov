@@ -29,7 +29,7 @@ namespace _3.QuickVSSelectSort
         static int Partition(ref MyArray array, int left, int right)
         {
             // Determine privot index and value
-            int privotID = (left + right) >> 1;
+            int privotID = rand.Next(left, right);//(left + right) >> 1;
             MyInt privot = (MyInt)array[privotID].Clone();
 
             // Swap current privot and last element of array
@@ -168,8 +168,11 @@ namespace _3.QuickVSSelectSort
                         throw new InvalidDataException("There is no such type of sorting");
                 }
 
-                swAssigment.WriteLine("{0} {1}", curID, MyInt.AssigmentCount);
-                swCompare.WriteLine("{0} {1}", curID, MyInt.CompareCount);
+                if (curID % 10 == 0)
+                {
+                    swAssigment.WriteLine("{0} {1}", curID, MyInt.AssigmentCount);
+                    swCompare.WriteLine("{0} {1}", curID, MyInt.CompareCount);
+                }
                 ++curID;
 
                 stack.Pop();
@@ -199,8 +202,11 @@ namespace _3.QuickVSSelectSort
                         throw new InvalidDataException("There is no such type of sorting");
                 }
 
-                swAssigment.WriteLine("{0} {1}", curID, MyInt.AssigmentCount);
-                swCompare.WriteLine("{0} {1}", curID, MyInt.CompareCount);
+                if (curID % 10 == 0)
+                {
+                    swAssigment.WriteLine("{0} {1}", curID, MyInt.AssigmentCount);
+                    swCompare.WriteLine("{0} {1}", curID, MyInt.CompareCount);
+                }
                 ++curID;
             }
 
@@ -220,10 +226,17 @@ namespace _3.QuickVSSelectSort
             #endregion
 
             MyArray array = new MyArray(arraySize);
-            array.fillWithRandomValues(0, 100);
+            array.fillWithRandomValues(int.MinValue, int.MaxValue);
 
-            SingleIDSolver(array, (int)SortType.Q_SORT, swQSortAssigment, swQSortCompare);
-            SingleIDSolver(array, (int)SortType.MERGE_SORT, swMergeSortAssigment, swMergewSortCompare);
+            MyArray qSortArray = (MyArray)array.Clone();
+            MyArray mergeSortArray = (MyArray)array.Clone();
+
+            MyInt.AssigmentCount = 0;
+            MyInt.CompareCount = 0;
+
+            SingleIDSolver(mergeSortArray, (int)SortType.MERGE_SORT, swMergeSortAssigment, swMergewSortCompare);
+            SingleIDSolver(qSortArray, (int)SortType.Q_SORT, swQSortAssigment, swQSortCompare);
+            
 
             #region StreamWriter Close
 
@@ -260,9 +273,12 @@ namespace _3.QuickVSSelectSort
                 #region Initilize arays
 
                 MyArray qSortArray = new MyArray(curLenght);
-                qSortArray.fillWithRandomValues(0, 10);
+                qSortArray.fillWithRandomValues(int.MinValue, int.MaxValue);
 
                 MyArray mergeSortArray = (MyArray)qSortArray.Clone();
+
+                MyInt.AssigmentCount = 0;
+                MyInt.CompareCount = 0;
 
                 #endregion
 
@@ -308,8 +324,8 @@ namespace _3.QuickVSSelectSort
         {
             try
             {
-                SolverID(100);
-                //SolverLenght(10, 100, 10);
+                //SolverID(1000);
+                SolverLenght(1000, 10000, 1000);
             }
             catch (InvalidDataException ex)
             {
