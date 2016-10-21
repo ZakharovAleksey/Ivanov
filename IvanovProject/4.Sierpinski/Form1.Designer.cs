@@ -34,6 +34,10 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
+            this.btnSave = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.tbMaxDepth = new System.Windows.Forms.TextBox();
+            this.labelExecution = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.drawingArea)).BeginInit();
             this.SuspendLayout();
             // 
@@ -47,9 +51,9 @@
             // 
             // btnDraw
             // 
-            this.btnDraw.Location = new System.Drawing.Point(501, 339);
+            this.btnDraw.Location = new System.Drawing.Point(440, 64);
             this.btnDraw.Name = "btnDraw";
-            this.btnDraw.Size = new System.Drawing.Size(99, 54);
+            this.btnDraw.Size = new System.Drawing.Size(183, 52);
             this.btnDraw.TabIndex = 2;
             this.btnDraw.Text = "Draw";
             this.btnDraw.UseVisualStyleBackColor = true;
@@ -57,9 +61,9 @@
             // 
             // btnClear
             // 
-            this.btnClear.Location = new System.Drawing.Point(501, 270);
+            this.btnClear.Location = new System.Drawing.Point(440, 339);
             this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(99, 53);
+            this.btnClear.Size = new System.Drawing.Size(183, 54);
             this.btnClear.TabIndex = 3;
             this.btnClear.Text = "Clear";
             this.btnClear.UseVisualStyleBackColor = true;
@@ -75,7 +79,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(448, 50);
+            this.label2.Location = new System.Drawing.Point(437, 34);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(64, 13);
             this.label2.TabIndex = 4;
@@ -83,16 +87,57 @@
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(518, 43);
+            this.textBox2.Location = new System.Drawing.Point(566, 31);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 20);
+            this.textBox2.Size = new System.Drawing.Size(57, 20);
             this.textBox2.TabIndex = 5;
+            this.textBox2.Text = "0";
+            // 
+            // btnSave
+            // 
+            this.btnSave.Location = new System.Drawing.Point(440, 170);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(183, 54);
+            this.btnSave.TabIndex = 6;
+            this.btnSave.Text = "Save execution time";
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(437, 147);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(110, 13);
+            this.label3.TabIndex = 7;
+            this.label3.Text = "Input maximum depth:";
+            // 
+            // tbMaxDepth
+            // 
+            this.tbMaxDepth.Location = new System.Drawing.Point(566, 144);
+            this.tbMaxDepth.Name = "tbMaxDepth";
+            this.tbMaxDepth.Size = new System.Drawing.Size(57, 20);
+            this.tbMaxDepth.TabIndex = 8;
+            this.tbMaxDepth.Text = "0";
+            // 
+            // labelExecution
+            // 
+            this.labelExecution.AutoSize = true;
+            this.labelExecution.Location = new System.Drawing.Point(471, 238);
+            this.labelExecution.Name = "labelExecution";
+            this.labelExecution.Size = new System.Drawing.Size(117, 13);
+            this.labelExecution.TabIndex = 9;
+            this.labelExecution.Text = "Execution is not started";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(646, 436);
+            this.Controls.Add(this.labelExecution);
+            this.Controls.Add(this.tbMaxDepth);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.btnSave);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -115,6 +160,10 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox tbMaxDepth;
+        private System.Windows.Forms.Label labelExecution;
     }
 }
 
