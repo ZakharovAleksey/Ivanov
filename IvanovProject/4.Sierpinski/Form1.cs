@@ -101,11 +101,11 @@ namespace _4.Sierpinski
                 }
                 else if (chBoxRecursive.Checked && !chBoxIterative.Checked)
                 {
-                    Sierpinski(depth, dx, dy, gr);
+                    Sierpinski(curDepth, dx, dy);
                 }
                 else if (chBoxIterative.Checked && !chBoxRecursive.Checked)
                 {
-                    Sierpinski_NR(depth, dx, dy, gr);
+                    Sierpinski_NR(curDepth, dx, dy);
                 }
                 else
                 {
@@ -116,7 +116,8 @@ namespace _4.Sierpinski
                 }
 
                 exTime.Stop();
-                sw.WriteLine("{0} {1}", curDepth, exTime.ElapsedMilliseconds);
+                long time = exTime.ElapsedMilliseconds;
+                sw.WriteLine("{0} {1}", curDepth, time);
             }
 
             labelExecution.Text = "Execution Complete";
