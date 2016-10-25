@@ -12,6 +12,14 @@ using System.Windows.Forms;
 
 namespace _4.Sierpinski
 {
+    enum CurveType
+    {
+        A = 0,
+        B = 1,
+        C = 2,
+        D = 3
+    }
+
     public partial class Form1 : Form
     {
         Bitmap drawingSurface;
@@ -39,6 +47,7 @@ namespace _4.Sierpinski
                 float dy = (float)(drawingArea.Height / Math.Pow(2, depth - 1) / 8);
 
                 Sierpinski(depth, dx, dy, gr);
+                //SierpinskiNonRec(depth, dx, dy, gr);
                 drawingArea.Image = drawingSurface;
             }
         }
@@ -81,19 +90,28 @@ namespace _4.Sierpinski
 
         #region Sierpincki non recursive algorithm
 
-        static private void DrawSubCurve(int depth, int pc, int dx, int dy, Graphics gr = null)
+        static private void SierpinskiNonRec(int depth, float dx, float dy, Graphics gr = null)
         {
             float x = dx;
             float y = dy;
 
-            bool aDone = false;
-            bool bDone = false;
-            bool cDone = false;
-            bool dDone = false;
+            DrawCurve(11, depth, ref x, ref y, dx, dy, gr);
+            drawLine(gr, ref x, ref y, dx, dy);
+            DrawCurve(21, depth, ref x, ref y, dx, dy, gr);
+            drawLine(gr, ref x, ref y, -dx, dy);
+            DrawCurve(31, depth, ref x, ref y, dx, dy, gr);
+            drawLine(gr, ref x, ref y, -dx, -dy);
+            DrawCurve(41, depth, ref x, ref y, dx, dy, gr);
+            drawLine(gr, ref x, ref y, dx, -dy);
 
+        }
+
+
+        private static void DrawCurve(int curveType, int depth, ref float x, ref float y, float dx, float dy, Graphics gr = null)
+        {
             while (true)
             {
-                switch (pc)
+                switch (curveType)
                 {
                     case 11:
                         if (depth <= 1)
@@ -101,29 +119,15 @@ namespace _4.Sierpinski
                             drawLine(gr, ref x, ref y, dx, dy);
                             drawLine(gr, ref x, ref y, 2 * dx, 0);
                             drawLine(gr, ref x, ref y, dx, -dy);
-                            pc = 0;
-                            aDone = true;
+                            curveType = 0;
                         }
                         else
                         {
-                            --depth;
-                            pc = 11;
+                            drawLine(gr, ref x, ref y, dx, dy);
+                            drawLine(gr, ref x, ref y, 2 * dx, 0);
+                            drawLine(gr, ref x, ref y, dx, -dy);
+                            curveType = 22;
                         }
-                        break;
-                    case 12:
-                        drawLine(gr, ref x, ref y, dx, dy);
-                        --depth;
-                        pc = 21;
-                        break;
-                    case 13:
-                        drawLine(gr, ref x, ref y, 2 * dx, 0);
-                        --depth;
-                        pc = 41;
-                        break;
-                    case 14:
-                        drawLine(gr, ref x, ref y, dx, -dy);
-                        --depth;
-                        pc = 11;
                         break;
                     case 21:
                         if (depth <= 1)
@@ -131,29 +135,12 @@ namespace _4.Sierpinski
                             drawLine(gr, ref x, ref y, -dx, dy);
                             drawLine(gr, ref x, ref y, 0, 2 * dy);
                             drawLine(gr, ref x, ref y, dx, dy);
-                            pc = 0;
-                            bDone = true;
-                        }
-                        else
-                        {
-                            --depth;
-                            pc = 21;
+                            curveType = 0;
                         }
                         break;
                     case 22:
-                        drawLine(gr, ref x, ref y, -dx, dy);
-                        --depth;
-                        pc = 31;
-                        break;
-                    case 23:
-                        drawLine(gr, ref x, ref y, 0, 2 * dy);
-                        --depth;
-                        pc = 11;
-                        break;
-                    case 24:
                         drawLine(gr, ref x, ref y, dx, dy);
-                        --depth;
-                        pc = 21;
+                        curveType = 
                         break;
                     case 31:
                         if (depth <= 1)
@@ -161,29 +148,8 @@ namespace _4.Sierpinski
                             drawLine(gr, ref x, ref y, -dx, -dy);
                             drawLine(gr, ref x, ref y, -2 * dx, 0);
                             drawLine(gr, ref x, ref y, -dx, dy);
-                            pc = 0;
-                            cDone = true;
+                            curveType = 0;
                         }
-                        else
-                        {
-                            --depth;
-                            pc = 31;
-                        }
-                        break;
-                    case 32:
-                        drawLine(gr, ref x, ref y, -dx, -dy);
-                        --depth;
-                        pc = 41;
-                        break;
-                    case 33:
-                        drawLine(gr, ref x, ref y, -2 * dx, 0);
-                        --depth;
-                        pc = 21;
-                        break;
-                    case 34:
-                        drawLine(gr, ref x, ref y, -dx, dy);
-                        --depth;
-                        pc = 31;
                         break;
                     case 41:
                         if (depth <= 1)
@@ -191,40 +157,12 @@ namespace _4.Sierpinski
                             drawLine(gr, ref x, ref y, dx, -dy);
                             drawLine(gr, ref x, ref y, 0, -2 * dy);
                             drawLine(gr, ref x, ref y, -dx, -dy);
-                            pc = 0;
-                            dDone = true;
+                            curveType = 0;
                         }
-                        else
-                        {
-                            --depth;
-                            pc = 41;
-                        }
-                        break;
-                    case 42:
-                        drawLine(gr, ref x, ref y, dx, -dy);
-                        --depth;
-                        pc = 31;
-                        break;
-                    case 43:
-                        drawLine(gr, ref x, ref y, 0, -2 * dy);
-                        --depth;
-                        pc = 11;
-                        break;
-                    case 44:
-                        drawLine(gr, ref x, ref y, -dx, -dy);
-                        --depth;
-                        pc = 41;
                         break;
                     case 0:
-                        if (aDone && bDone && cDone && dDone)
-                            return;
-                        break;
-
-
-
-
+                        return;
                 }
-
             }
         }
 
