@@ -38,6 +38,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.tbMaxDepth = new System.Windows.Forms.TextBox();
             this.labelExecution = new System.Windows.Forms.Label();
+            this.chBoxRecursive = new System.Windows.Forms.CheckBox();
+            this.chBoxIterative = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.drawingArea)).BeginInit();
             this.SuspendLayout();
             // 
@@ -51,7 +53,7 @@
             // 
             // btnDraw
             // 
-            this.btnDraw.Location = new System.Drawing.Point(440, 64);
+            this.btnDraw.Location = new System.Drawing.Point(440, 94);
             this.btnDraw.Name = "btnDraw";
             this.btnDraw.Size = new System.Drawing.Size(183, 52);
             this.btnDraw.TabIndex = 2;
@@ -95,7 +97,7 @@
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(440, 170);
+            this.btnSave.Location = new System.Drawing.Point(440, 222);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(183, 54);
             this.btnSave.TabIndex = 6;
@@ -106,7 +108,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(437, 147);
+            this.label3.Location = new System.Drawing.Point(437, 184);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(110, 13);
             this.label3.TabIndex = 7;
@@ -114,7 +116,7 @@
             // 
             // tbMaxDepth
             // 
-            this.tbMaxDepth.Location = new System.Drawing.Point(566, 144);
+            this.tbMaxDepth.Location = new System.Drawing.Point(566, 181);
             this.tbMaxDepth.Name = "tbMaxDepth";
             this.tbMaxDepth.Size = new System.Drawing.Size(57, 20);
             this.tbMaxDepth.TabIndex = 8;
@@ -123,17 +125,39 @@
             // labelExecution
             // 
             this.labelExecution.AutoSize = true;
-            this.labelExecution.Location = new System.Drawing.Point(471, 238);
+            this.labelExecution.Location = new System.Drawing.Point(464, 292);
             this.labelExecution.Name = "labelExecution";
             this.labelExecution.Size = new System.Drawing.Size(117, 13);
             this.labelExecution.TabIndex = 9;
             this.labelExecution.Text = "Execution is not started";
+            // 
+            // chBoxRecursive
+            // 
+            this.chBoxRecursive.AutoSize = true;
+            this.chBoxRecursive.Location = new System.Drawing.Point(453, 62);
+            this.chBoxRecursive.Name = "chBoxRecursive";
+            this.chBoxRecursive.Size = new System.Drawing.Size(74, 17);
+            this.chBoxRecursive.TabIndex = 10;
+            this.chBoxRecursive.Text = "Recursive";
+            this.chBoxRecursive.UseVisualStyleBackColor = true;
+            // 
+            // chBoxIterative
+            // 
+            this.chBoxIterative.AutoSize = true;
+            this.chBoxIterative.Location = new System.Drawing.Point(533, 62);
+            this.chBoxIterative.Name = "chBoxIterative";
+            this.chBoxIterative.Size = new System.Drawing.Size(64, 17);
+            this.chBoxIterative.TabIndex = 11;
+            this.chBoxIterative.Text = "Iterative";
+            this.chBoxIterative.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(646, 436);
+            this.Controls.Add(this.chBoxIterative);
+            this.Controls.Add(this.chBoxRecursive);
             this.Controls.Add(this.labelExecution);
             this.Controls.Add(this.tbMaxDepth);
             this.Controls.Add(this.label3);
@@ -164,6 +188,8 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox tbMaxDepth;
         private System.Windows.Forms.Label labelExecution;
+        private System.Windows.Forms.CheckBox chBoxRecursive;
+        private System.Windows.Forms.CheckBox chBoxIterative;
     }
 }
 
