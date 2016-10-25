@@ -12,14 +12,6 @@ using System.Windows.Forms;
 
 namespace _4.Sierpinski
 {
-    enum CurveType
-    {
-        A = 0,
-        B = 1,
-        C = 2,
-        D = 3
-    }
-
     public partial class Form1 : Form
     {
         Bitmap drawingSurface;
@@ -46,21 +38,44 @@ namespace _4.Sierpinski
                 float dx = (float)(drawingArea.Width / Math.Pow(2, depth - 1) / 8);
                 float dy = (float)(drawingArea.Height / Math.Pow(2, depth - 1) / 8);
 
-                Sierpinski(depth, dx, dy, gr);
-                //SierpinskiNonRec(depth, dx, dy, gr);
+                if (chBoxRecursive.Checked && chBoxIterative.Checked)
+                {
+                    MessageBox.Show("Error! Choose only one approach!");
+                    return;
+                }
+                else if (chBoxRecursive.Checked && !chBoxIterative.Checked)
+                {
+                    Sierpinski(depth, dx, dy, gr);
+                }
+                else if (chBoxIterative.Checked && !chBoxRecursive.Checked)
+                {
+                    Sierpinski_NR(depth, dx, dy, gr);
+                }
+                else
+                {
+                    MessageBox.Show("Error! Choose one of two approach!");
+                    return;
+                }
+                
                 drawingArea.Image = drawingSurface;
             }
         }
 
         private void btnClear_Click(object sender, EventArgs e)
         {
-            gr.Clear(Color.Black);
+            // Clear Surface
+            drawingSurface = new Bitmap(drawingArea.Width, drawingArea.Height);
+            drawingArea.Image = drawingSurface;
+
+            // Set zero values
             depth = 0;
             textBox2.Text = "0";
             tbMaxDepth.Text = "0";
+
+            chBoxRecursive.Checked = false;
+            chBoxIterative.Checked = false;
+
             labelExecution.Text = "Execution is not started";
-
-
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -76,7 +91,30 @@ namespace _4.Sierpinski
             {
                 labelExecution.Text = "Execution process";
                 exTime.Restart();
-                Sierpinski(curDepth, dx, dy);
+
+                if (chBoxRecursive.Checked && chBoxIterative.Checked)
+                {
+                    labelExecution.Text = "Execution is not started";
+                    MessageBox.Show("Error! Choose only one approach!");
+                    sw.Close();
+                    return;
+                }
+                else if (chBoxRecursive.Checked && !chBoxIterative.Checked)
+                {
+                    Sierpinski(depth, dx, dy, gr);
+                }
+                else if (chBoxIterative.Checked && !chBoxRecursive.Checked)
+                {
+                    Sierpinski_NR(depth, dx, dy, gr);
+                }
+                else
+                {
+                    labelExecution.Text = "Execution is not started";
+                    MessageBox.Show("Error! Choose one of two approach!");
+                    sw.Close();
+                    return;
+                }
+
                 exTime.Stop();
                 sw.WriteLine("{0} {1}", curDepth, exTime.ElapsedMilliseconds);
             }
@@ -90,79 +128,129 @@ namespace _4.Sierpinski
 
         #region Sierpincki non recursive algorithm
 
-        static private void SierpinskiNonRec(int depth, float dx, float dy, Graphics gr = null)
+        struct DrawTask
         {
+            public DrawTask(char type, int depth, float dx = 0, float dy = 0)
+            {
+                Type = type;
+                Depth = depth;
+                Linedx = dx;
+                Linedy = dy;
+            }
+
+            public char Type; // A, B, C, D или L
+            public int Depth;
+            public float Linedx;
+            public float Linedy;
+        }
+
+        static void Sierpinski_NR(int depth, float dx, float dy, Graphics gr = null)
+        {
+            Stack<DrawTask> taskStack = new Stack<DrawTask>();
             float x = dx;
             float y = dy;
 
-            DrawCurve(11, depth, ref x, ref y, dx, dy, gr);
-            drawLine(gr, ref x, ref y, dx, dy);
-            DrawCurve(21, depth, ref x, ref y, dx, dy, gr);
-            drawLine(gr, ref x, ref y, -dx, dy);
-            DrawCurve(31, depth, ref x, ref y, dx, dy, gr);
-            drawLine(gr, ref x, ref y, -dx, -dy);
-            DrawCurve(41, depth, ref x, ref y, dx, dy, gr);
-            drawLine(gr, ref x, ref y, dx, -dy);
+            // загружаем задания в стек в обратном порядке
+            taskStack.Push(new DrawTask('L', depth, dx, -dy));
+            taskStack.Push(new DrawTask('D', depth));
+            taskStack.Push(new DrawTask('L', depth, -dx, -dy));
+            taskStack.Push(new DrawTask('C', depth));
+            taskStack.Push(new DrawTask('L', depth, -dx, dy));
+            taskStack.Push(new DrawTask('B', depth));
+            taskStack.Push(new DrawTask('L', depth, dx, dy));
+            taskStack.Push(new DrawTask('A', depth));
 
+            // пока есть задание, достаём его и выполняем
+            // в результате выполнения в стеке могут оказаться подзадания
+            while (taskStack.Count > 0)
+            {
+                var currentTask = taskStack.Pop();
+                switch (currentTask.Type)
+                {
+                    case 'A':
+                        drawA_NR(gr, currentTask.Depth, ref x, ref y, dx, dy, taskStack);
+                        break;
+                    case 'B':
+                        drawB_NR(gr, currentTask.Depth, ref x, ref y, dx, dy, taskStack);
+                        break;
+                    case 'C':
+                        drawC_NR(gr, currentTask.Depth, ref x, ref y, dx, dy, taskStack);
+                        break;
+                    case 'D':
+                        drawD_NR(gr, currentTask.Depth, ref x, ref y, dx, dy, taskStack);
+                        break;
+                    case 'L':
+                        drawLine(gr, ref x, ref y, currentTask.Linedx, currentTask.Linedy);
+                        break;
+                }
+            }
         }
 
-
-        private static void DrawCurve(int curveType, int depth, ref float x, ref float y, float dx, float dy, Graphics gr = null)
+        static void drawA_NR(Graphics gr, int depth, ref float x, ref float y, float dx, float dy, Stack<DrawTask> taskStack)
         {
-            while (true)
+            if (depth > 0)
             {
-                switch (curveType)
-                {
-                    case 11:
-                        if (depth <= 1)
-                        {
-                            drawLine(gr, ref x, ref y, dx, dy);
-                            drawLine(gr, ref x, ref y, 2 * dx, 0);
-                            drawLine(gr, ref x, ref y, dx, -dy);
-                            curveType = 0;
-                        }
-                        else
-                        {
-                            drawLine(gr, ref x, ref y, dx, dy);
-                            drawLine(gr, ref x, ref y, 2 * dx, 0);
-                            drawLine(gr, ref x, ref y, dx, -dy);
-                            curveType = 22;
-                        }
-                        break;
-                    case 21:
-                        if (depth <= 1)
-                        {
-                            drawLine(gr, ref x, ref y, -dx, dy);
-                            drawLine(gr, ref x, ref y, 0, 2 * dy);
-                            drawLine(gr, ref x, ref y, dx, dy);
-                            curveType = 0;
-                        }
-                        break;
-                    case 22:
-                        drawLine(gr, ref x, ref y, dx, dy);
-                        curveType = 
-                        break;
-                    case 31:
-                        if (depth <= 1)
-                        {
-                            drawLine(gr, ref x, ref y, -dx, -dy);
-                            drawLine(gr, ref x, ref y, -2 * dx, 0);
-                            drawLine(gr, ref x, ref y, -dx, dy);
-                            curveType = 0;
-                        }
-                        break;
-                    case 41:
-                        if (depth <= 1)
-                        {
-                            drawLine(gr, ref x, ref y, dx, -dy);
-                            drawLine(gr, ref x, ref y, 0, -2 * dy);
-                            drawLine(gr, ref x, ref y, -dx, -dy);
-                            curveType = 0;
-                        }
-                        break;
-                    case 0:
-                        return;
-                }
+                --depth;
+
+                // помещаем в стек в обратном порядке
+                taskStack.Push(new DrawTask('A', depth));
+                taskStack.Push(new DrawTask('L', depth, dx, -dy));
+                taskStack.Push(new DrawTask('D', depth));
+                taskStack.Push(new DrawTask('L', depth, 2 * dx, 0));
+                taskStack.Push(new DrawTask('B', depth));
+                taskStack.Push(new DrawTask('L', depth, dx, dy));
+                taskStack.Push(new DrawTask('A', depth));
+            }
+        }
+
+        static void drawB_NR(Graphics gr, int depth, ref float x, ref float y, float dx, float dy, Stack<DrawTask> taskStack)
+        {
+            if (depth > 0)
+            {
+                --depth;
+
+                // помещаем в стек в обратном порядке
+                taskStack.Push(new DrawTask('B', depth));
+                taskStack.Push(new DrawTask('L', depth, dx, dy));
+                taskStack.Push(new DrawTask('A', depth));
+                taskStack.Push(new DrawTask('L', depth, 0, 2 * dy));
+                taskStack.Push(new DrawTask('C', depth));
+                taskStack.Push(new DrawTask('L', depth, -dx, dy));
+                taskStack.Push(new DrawTask('B', depth));
+            }
+        }
+
+        static void drawC_NR(Graphics gr, int depth, ref float x, ref float y, float dx, float dy, Stack<DrawTask> taskStack)
+        {
+            if (depth > 0)
+            {
+                --depth;
+
+                // помещаем в стек в обратном порядке
+                taskStack.Push(new DrawTask('C', depth));
+                taskStack.Push(new DrawTask('L', depth, -dx, dy));
+                taskStack.Push(new DrawTask('B', depth));
+                taskStack.Push(new DrawTask('L', depth, - 2 * dx, 0));
+                taskStack.Push(new DrawTask('D', depth));
+                taskStack.Push(new DrawTask('L', depth, -dx, -dy));
+                taskStack.Push(new DrawTask('C', depth));
+            }
+        }
+
+        static void drawD_NR(Graphics gr, int depth, ref float x, ref float y, float dx, float dy, Stack<DrawTask> taskStack)
+        {
+            if (depth > 0)
+            {
+                --depth;
+
+                // помещаем в стек в обратном порядке
+                taskStack.Push(new DrawTask('D', depth));
+                taskStack.Push(new DrawTask('L', depth, -dx, -dy));
+                taskStack.Push(new DrawTask('C', depth));
+                taskStack.Push(new DrawTask('L', depth, 0, -2 * dy));
+                taskStack.Push(new DrawTask('A', depth));
+                taskStack.Push(new DrawTask('L', depth, dx, -dy));
+                taskStack.Push(new DrawTask('D', depth));
             }
         }
 
