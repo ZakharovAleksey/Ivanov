@@ -27,9 +27,12 @@ namespace _6.BypassingTheChessboard
             drawingSurface = new Bitmap(drawingArea.Width, drawingArea.Height);
             gr = Graphics.FromImage(drawingSurface);
 
+
+
             gr.DrawRectangle(Pens.Black, 10, 10, 10, 10);
-            //gr.DrawLine(Pens.Black, 10, 10, 100, 100);
             
+
+
 
             drawingArea.Image = drawingSurface;
         }
