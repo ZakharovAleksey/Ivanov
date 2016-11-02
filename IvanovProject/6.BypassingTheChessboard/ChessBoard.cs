@@ -11,11 +11,23 @@ namespace _6.BypassingTheChessboard
     class ChessBoard
     {
         #region Fields
-        Graphics Gr { get; }
 
+        #region Modeling Fields
+
+        // Number of cells in width
         int Size { get; } = 5;
-
+        // Array of cells
         Cell[,] Board;
+
+        #endregion
+
+        #region Drawing Fields
+
+        Graphics Gr { get; }
+        // Width of paint area
+        int Width { get; }
+
+        #endregion
 
         #endregion
 

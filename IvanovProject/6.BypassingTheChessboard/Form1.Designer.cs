@@ -39,7 +39,7 @@
             // 
             this.drawingArea.Location = new System.Drawing.Point(29, 43);
             this.drawingArea.Name = "drawingArea";
-            this.drawingArea.Size = new System.Drawing.Size(325, 327);
+            this.drawingArea.Size = new System.Drawing.Size(256, 256);
             this.drawingArea.TabIndex = 0;
             this.drawingArea.TabStop = false;
             // 
@@ -73,7 +73,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(542, 431);
+            this.ClientSize = new System.Drawing.Size(560, 356);
             this.Controls.Add(this.btnStart);
             this.Controls.Add(this.lblChessBoard);
             this.Controls.Add(this.textBoxChessBoardSize);

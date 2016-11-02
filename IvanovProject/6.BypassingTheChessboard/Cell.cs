@@ -18,30 +18,51 @@ namespace _6.BypassingTheChessboard
     {
         #region Properties
 
+        #region Drawing Properties
+
         Graphics Gr { get; }
 
-        Rectangle PositionRect { get; set; } 
-        int Type { get; }
+        Rectangle CellRectangle { get; set; }
 
+        #endregion
+
+        #region Modeling Properties
+
+        int characteristicSize;
+
+        int Width
+        {
+            get { return characteristicSize; }
+        }
+
+        int Height
+        {
+            get { return characteristicSize; }
+        }
+
+        int Type { get; }
+        
         bool IsPossible { get; set; } = true;
 
+        #endregion
 
         #endregion
 
         #region Constructor
 
-        public Cell(Graphics gr, int cellType, Rectangle position)
+        public Cell(Graphics gr, int cellType, int cellSize, Rectangle cellRectangle)
         {
             this.Gr = gr;
             this.Type = cellType;
-            this.PositionRect = position;
+            characteristicSize = cellSize;
+            this.CellRectangle = cellRectangle;
 
-            Gr.DrawRectangle(Pens.Black, PositionRect);
+            Gr.DrawRectangle(Pens.Black, CellRectangle);
 
             if (cellType == (int)CellType.WHITE)
-                Gr.FillRectangle(Brushes.White, PositionRect);
+                Gr.FillRectangle(Brushes.White, CellRectangle);
             else
-                Gr.FillRectangle(Brushes.Black, PositionRect);
+                Gr.FillRectangle(Brushes.Black, CellRectangle);
         }
 
         #endregion
@@ -51,7 +72,7 @@ namespace _6.BypassingTheChessboard
         void MarkAsUsed()
         {
             IsPossible = false;
-            Gr.FillRectangle(Brushes.Red, PositionRect);
+            Gr.FillRectangle(Brushes.Red, CellRectangle);
         }
 
         #endregion
