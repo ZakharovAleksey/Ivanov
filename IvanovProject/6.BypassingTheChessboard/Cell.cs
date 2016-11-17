@@ -3,78 +3,83 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Drawing;
+
 
 
 namespace _6.BypassingTheChessboard
 {
     enum CellType
     {
-        BLACK = 0,
-        WHITE = 1
+        WHITE = 0,
+        BLACK = 1,
+        USED = 2
     }
 
     class Cell
     {
+
+        public Cell(int x, int y, int size, int type)
+        {
+            this.width = size;
+            this.height = size;
+
+            positionX = x;
+            positionY = y;
+
+            this.type = type;
+        }
+
+        #region Fields
+
+        int possibleSteps = 0;
+
+        int height = 0;
+        int width = 0;
+
+        int positionX = 0;
+        int positionY = 0;
+        int type;
+
+        #endregion
+
         #region Properties
 
-        #region Drawing Properties
+        public bool IsVisited { get; set; } = false;
 
-        Graphics Gr { get; }
-
-        Rectangle CellRectangle { get; set; }
-
-        #endregion
-
-        #region Modeling Properties
-
-        int characteristicSize;
-
-        int Width
+        public int PossibleSteps
         {
-            get { return characteristicSize; }
+            get { return possibleSteps; }
+            set { possibleSteps = value; }
         }
 
-        int Height
+        public int Height
         {
-            get { return characteristicSize; }
+            get { return height; }   
         }
 
-        int Type { get; }
-        
-        bool IsPossible { get; set; } = true;
-
-        #endregion
-
-        #endregion
-
-        #region Constructor
-
-        public Cell(Graphics gr, int cellType, int cellSize, Rectangle cellRectangle)
+        public int Width
         {
-            this.Gr = gr;
-            this.Type = cellType;
-            characteristicSize = cellSize;
-            this.CellRectangle = cellRectangle;
+            get { return width; }
+        }
 
-            Gr.DrawRectangle(Pens.Black, CellRectangle);
+        public int X
+        {
+            get { return positionX; }
+        }
 
-            if (cellType == (int)CellType.WHITE)
-                Gr.FillRectangle(Brushes.White, CellRectangle);
-            else
-                Gr.FillRectangle(Brushes.Black, CellRectangle);
+        public int Y
+        {
+            get { return positionY; }
+        }
+
+        public int Type
+        {
+            get { return type; }
+            set { type = value; }
         }
 
         #endregion
 
-        #region Methods
-
-        void MarkAsUsed()
-        {
-            IsPossible = false;
-            Gr.FillRectangle(Brushes.Red, CellRectangle);
-        }
-
-        #endregion
     }
 }
+
