@@ -44,8 +44,8 @@ namespace _6.BypassingTheChessboard
 
         int moveCount = 8;
 
-        int[] xMove = { -2, -1, 1, 2, 2, 1, -1, -2 };
-        int[] yMove = { 1, 2, 2, 1, -1, -2, -2, -1 };
+        int[] xMove = { -2, -1, 1, 2,  2,  1, -1, -2 };
+        int[] yMove = { 1,  2,  2, 1, -1, -2, -2, -1 };
 
         public void CalcInitalPossibleSteps()
         {
@@ -57,7 +57,7 @@ namespace _6.BypassingTheChessboard
         void CalcPossibleSteps(int row, int col)
         {
             for (int curMove = 0; curMove < moveCount; ++curMove)
-                if (row + xMove[curMove] >= 0 && row + xMove[curMove] < chessBoardSize && row + yMove[curMove] >= 0 && row + yMove[curMove] < chessBoardSize)
+                if (col + xMove[curMove] >= 0 && row + yMove[curMove] >= 0 && col + xMove[curMove] < chessBoardSize && row + yMove[curMove] < chessBoardSize)
                     ++body[row, col].PossibleSteps;
         }
 
