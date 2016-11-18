@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections;
 
 namespace _6.BypassingTheChessboard
 {
@@ -19,21 +20,15 @@ namespace _6.BypassingTheChessboard
 
             int curCellType = (int)CellType.WHITE;
 
-            for (int row = 0; row < this.ChessBoardSize; ++row)
+            for (int curRow = 0; curRow < this.ChessBoardSize; ++curRow)
             {
-                if(row % 2 == 0)
-                    curCellType = (int)CellType.WHITE;
-                else
-                    curCellType = (int)CellType.BLACK;
+                curCellType = (curRow % 2 == 0) ? (int)CellType.WHITE : (int)CellType.BLACK;
 
-                for (int col = 0; col < this.ChessBoardSize; ++col)
+                for (int curCol = 0; curCol < this.ChessBoardSize; ++curCol)
                 {
-                    body[row, col] = new Cell(row * CellSize, col * CellSize, CellSize, curCellType);
+                    body[curRow, curCol] = new Cell(curRow, curCol, CellSize, curCellType);
 
-                    if (curCellType == (int)CellType.WHITE)
-                        curCellType = (int)CellType.BLACK;
-                    else
-                        curCellType = (int)CellType.WHITE;
+                    curCellType = (curCellType == (int)CellType.WHITE) ? (int)CellType.BLACK : (int)CellType.WHITE;
                 }
             }
 
@@ -44,21 +39,57 @@ namespace _6.BypassingTheChessboard
 
         int moveCount = 8;
 
-        int[] xMove = { -2, -1, 1, 2,  2,  1, -1, -2 };
-        int[] yMove = { 1,  2,  2, 1, -1, -2, -2, -1 };
+        int[] yMove = { -1, -2, -2, -1, 1, 2,  2,  1}; //{ 1,  2,  2, 1, -1, -2, -2, -1 };
+        int[] xMove = { -2, -1,  1,  2, 2, 1, -1, -2}; //{ -2, -1, 1, 2,  2,  1, -1, -2 };
+        
 
-        public void CalcInitalPossibleSteps()
+
+        public void NextMove(ref int row, ref int col)
         {
-            for (int row = 0; row < chessBoardSize; ++row)
-                for (int col = 0; col < chessBoardSize; ++col)
-                    CalcPossibleSteps(row, col);
+
+            ArrayList posNextCellList = new ArrayList();
+
+            for (int curMove = 0; curMove < moveCount; ++curMove)
+            {
+                int possibleY = row + yMove[curMove];
+                int possibleX = col + xMove[curMove];
+
+                if (possibleX >= 0 && possibleY >= 0 && possibleX < chessBoardSize && possibleY < chessBoardSize && body[possibleY, possibleX].IsVisited == false)
+                {
+                    posNextCellList.Add(body[possibleY, possibleX]);
+                    CalcPosiibleSteps(possibleY, possibleX);
+                }
+            }
+
+            if (posNextCellList.Count == 0)
+                return;
+            Cell nextCell = (Cell)posNextCellList[0];
+            foreach (Cell curPosCell in posNextCellList)
+            {
+                if (curPosCell.PossibleSteps < nextCell.PossibleSteps)
+                {
+                    nextCell = curPosCell;
+                }
+            }
+
+            row = nextCell.Y;
+            col = nextCell.X;
+
+            body[row, col].IsVisited = true;
         }
 
-        void CalcPossibleSteps(int row, int col)
+        void CalcPosiibleSteps(int row, int col)
         {
+            body[row, col].PossibleSteps = 0;
             for (int curMove = 0; curMove < moveCount; ++curMove)
-                if (col + xMove[curMove] >= 0 && row + yMove[curMove] >= 0 && col + xMove[curMove] < chessBoardSize && row + yMove[curMove] < chessBoardSize)
+            {
+                int possibleY = row + yMove[curMove];
+                int possibleX = col + xMove[curMove];
+
+                if (possibleX >= 0 && possibleY >= 0 && possibleX < chessBoardSize && possibleY < chessBoardSize && body[possibleY, possibleX].IsVisited == false)
                     ++body[row, col].PossibleSteps;
+
+            }
         }
 
         #endregion

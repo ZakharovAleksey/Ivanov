@@ -18,16 +18,17 @@ namespace _6.BypassingTheChessboard
     class Cell
     {
 
-        public Cell(int x, int y, int size, int type)
+        public Cell(int row, int col, int size, int type)
         {
             this.width = size;
             this.height = size;
 
-            positionX = x;
-            positionY = y;
+            posRow = row;
+            posCol = col;
 
             this.type = type;
         }
+
 
         #region Fields
 
@@ -36,8 +37,8 @@ namespace _6.BypassingTheChessboard
         int height = 0;
         int width = 0;
 
-        int positionX = 0;
-        int positionY = 0;
+        int posRow = 0;
+        int posCol = 0;
         int type;
 
         #endregion
@@ -64,12 +65,12 @@ namespace _6.BypassingTheChessboard
 
         public int X
         {
-            get { return positionX; }
+            get { return posCol; }
         }
 
         public int Y
         {
-            get { return positionY; }
+            get { return posRow; }
         }
 
         public int Type
