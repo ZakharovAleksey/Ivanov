@@ -28,10 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.drawingArea = new System.Windows.Forms.PictureBox();
             this.textBoxChessBoardSize = new System.Windows.Forms.TextBox();
             this.lblChessBoard = new System.Windows.Forms.Label();
             this.btnStart = new System.Windows.Forms.Button();
+            this.btnClear = new System.Windows.Forms.Button();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.btnPrepareData = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.drawingArea)).BeginInit();
             this.SuspendLayout();
             // 
@@ -45,15 +49,15 @@
             // 
             // textBoxChessBoardSize
             // 
-            this.textBoxChessBoardSize.Location = new System.Drawing.Point(382, 70);
+            this.textBoxChessBoardSize.Location = new System.Drawing.Point(387, 74);
             this.textBoxChessBoardSize.Name = "textBoxChessBoardSize";
-            this.textBoxChessBoardSize.Size = new System.Drawing.Size(100, 20);
+            this.textBoxChessBoardSize.Size = new System.Drawing.Size(64, 20);
             this.textBoxChessBoardSize.TabIndex = 1;
             // 
             // lblChessBoard
             // 
             this.lblChessBoard.AutoSize = true;
-            this.lblChessBoard.Location = new System.Drawing.Point(379, 43);
+            this.lblChessBoard.Location = new System.Drawing.Point(363, 43);
             this.lblChessBoard.Name = "lblChessBoard";
             this.lblChessBoard.Size = new System.Drawing.Size(117, 13);
             this.lblChessBoard.TabIndex = 2;
@@ -61,7 +65,7 @@
             // 
             // btnStart
             // 
-            this.btnStart.Location = new System.Drawing.Point(383, 126);
+            this.btnStart.Location = new System.Drawing.Point(311, 112);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(99, 48);
             this.btnStart.TabIndex = 3;
@@ -69,11 +73,37 @@
             this.btnStart.UseVisualStyleBackColor = true;
             this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
             // 
+            // btnClear
+            // 
+            this.btnClear.Location = new System.Drawing.Point(429, 111);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(100, 49);
+            this.btnClear.TabIndex = 4;
+            this.btnClear.Text = "Clear Chessboard";
+            this.btnClear.UseVisualStyleBackColor = true;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // btnPrepareData
+            // 
+            this.btnPrepareData.Location = new System.Drawing.Point(355, 200);
+            this.btnPrepareData.Name = "btnPrepareData";
+            this.btnPrepareData.Size = new System.Drawing.Size(125, 49);
+            this.btnPrepareData.TabIndex = 5;
+            this.btnPrepareData.Text = "Prepare data for graph";
+            this.btnPrepareData.UseVisualStyleBackColor = true;
+            this.btnPrepareData.Click += new System.EventHandler(this.btnPrepareData_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(560, 356);
+            this.Controls.Add(this.btnPrepareData);
+            this.Controls.Add(this.btnClear);
             this.Controls.Add(this.btnStart);
             this.Controls.Add(this.lblChessBoard);
             this.Controls.Add(this.textBoxChessBoardSize);
@@ -92,6 +122,9 @@
         private System.Windows.Forms.TextBox textBoxChessBoardSize;
         private System.Windows.Forms.Label lblChessBoard;
         private System.Windows.Forms.Button btnStart;
+        private System.Windows.Forms.Button btnClear;
+        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Button btnPrepareData;
     }
 }
 
