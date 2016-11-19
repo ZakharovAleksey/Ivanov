@@ -4,8 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
-
 namespace _6.BypassingTheChessboard
 {
     enum CellType
@@ -17,7 +15,6 @@ namespace _6.BypassingTheChessboard
 
     class Cell
     {
-
         public Cell(int row, int col, int size, int type)
         {
             this.width = size;
@@ -28,7 +25,6 @@ namespace _6.BypassingTheChessboard
 
             this.type = type;
         }
-
 
         #region Fields
 
@@ -80,7 +76,6 @@ namespace _6.BypassingTheChessboard
         }
 
         #endregion
-
     }
 }
 
