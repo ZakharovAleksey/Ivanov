@@ -12,8 +12,14 @@ namespace _5.FrequencyDictionary
     static void Main(string[] args)
     {
             Tree.MyBinTree<string> tree = new Tree.MyBinTree<string>();
-            tree.Add("lol");
-            tree.Add("Hah");
+            Random rand = new Random();
+
+            for (int i = 0; i < 10; ++i)
+            {
+                tree.Add(rand.Next(0, 3).ToString());
+            }
+
+            Console.WriteLine();
             tree.Display(tree.Root);
     }
   }
