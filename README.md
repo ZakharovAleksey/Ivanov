@@ -86,4 +86,6 @@ Additional prerequisities:
 * [Matplotlib] (http://matplotlib.org/#) -  is a Python 2D plotting library which produces publication quality figures in a variety of hardcopy formats and interactive environments across platforms.
 * [Numpy] (http://www.numpy.org/) - is the fundamental package for scientific computing with Python.
 
+## Authors
 
+* **Zakharov Aleksey** - *Initial work* - [PurpleBooth](https://github.com/ZakharovAleksey)
