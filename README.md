@@ -55,6 +55,7 @@ This project is implemented with help of WPF technology. In this task two algori
 
 Result will be like on the picture below.
 
+![alt text](IvanovProject/ScreenShoots/Sierpinski.png "Sierpiński curve construction screenshot.")
 
 ### 5. Knight's tour task.
 
@@ -68,6 +69,7 @@ In this project one could see animation of Knight's movement.
 
 Screenshot will be like on the picture below.
 
+![alt text](IvanovProject/ScreenShoots/Knight's Tour.png "Knight's tour task screenshot.")
 
 ### Additional tasks.
 
